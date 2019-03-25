@@ -35,7 +35,7 @@ export default {
 h1 {
   font-size: 1.3rem;
   margin-top: 15vh;
-  text-shadow: 0px 0px 4px #ffaa;
+  text-shadow: 0px 0px 4px #ffa8;
 }
 
 footer {

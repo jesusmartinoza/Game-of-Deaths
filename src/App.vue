@@ -33,6 +33,7 @@
 }
 
 #logo {
+  margin-bottom: 2em;
   max-width: 400px;
   width: 100%;
 }
@@ -44,7 +45,7 @@
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(8px);
 }
 
 body {
@@ -55,7 +56,7 @@ body {
    ========================================================================== */
 /**/
 .crossfade > figure {
-  animation: imageAnimation 30s linear infinite 0s;
+  animation: imageAnimation 75s linear 0s infinite;
   backface-visibility: hidden;
   background-size: cover;
   background-position: center center;
@@ -73,35 +74,36 @@ body {
 .crossfade > figure:nth-child(1) { background-image: url('https://wallpapercave.com/wp/wp2062228.jpg'); }
 
 .crossfade > figure:nth-child(2) {
-  animation-delay: 6s;
+  animation-delay: 15s;
   background-image: url('https://wallpapercave.com/wp/wp2062229.jpg');
 }
 
 .crossfade > figure:nth-child(3) {
-  animation-delay: 12s;
+  animation-delay: 30s;
   background-image: url('https://wallpapercave.com/wp/wp2062334.jpg');
 }
 
 .crossfade > figure:nth-child(4) {
-  animation-delay: 18s;
+  animation-delay: 45s;
   background-image: url('https://wallpapercave.com/wp/wp2062291.jpg');
 }
 
 .crossfade > figure:nth-child(5) {
-  animation-delay: 24s;
+  animation-delay: 60s;
   background-image: url('https://wallpapercave.com/wp/wp2062265.jpg');
 }
 @keyframes
-imageAnimation {  0% {
+imageAnimation {
+ 0% {
  animation-timing-function: ease-in;
  opacity: 0;
 }
  8% {
  animation-timing-function: ease-out;
- opacity: 0.3;
+ opacity: 0;/*1;*/
 }
- 17% {
- opacity: 0.35;
+ 20% {
+ opacity: 0;/*1;*/
 }
  25% {
  opacity: 0
