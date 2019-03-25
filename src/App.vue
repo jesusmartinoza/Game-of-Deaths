@@ -1,10 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <router-link to="/">
+      <img id="logo" src="./assets/game_of_deaths.png" alt="Game of Deaths">
+    </router-link>
+
+    <transition appear
+      name="fade"
+      mode="out-in">
+        <router-view/>
+    </transition>
+
+    <div class="crossfade">
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -18,11 +30,85 @@
   text-align: center;
   color: #fff;
   margin-top: 60px;
-  padding: 2em;
+}
+
+#logo {
+  max-width: 400px;
+  width: 100%;
+}
+
+.fade-enter-active, .fade-leave-active {
+  -webkit-transition: opacity 1s, transform 500ms ease; /* Safari */
+  transition: opacity 1s, transform 500ms ease;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 body {
   background-color: black;
+}
+
+/* Background animation
+   ========================================================================== */
+/**/
+.crossfade > figure {
+  animation: imageAnimation 30s linear infinite 0s;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center center;
+  color: transparent;
+  height: 100vh;
+  left: 0px;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: -9999;
+}
+
+.crossfade > figure:nth-child(1) { background-image: url('https://wallpapercave.com/wp/wp2062228.jpg'); }
+
+.crossfade > figure:nth-child(2) {
+  animation-delay: 6s;
+  background-image: url('https://wallpapercave.com/wp/wp2062229.jpg');
+}
+
+.crossfade > figure:nth-child(3) {
+  animation-delay: 12s;
+  background-image: url('https://wallpapercave.com/wp/wp2062334.jpg');
+}
+
+.crossfade > figure:nth-child(4) {
+  animation-delay: 18s;
+  background-image: url('https://wallpapercave.com/wp/wp2062291.jpg');
+}
+
+.crossfade > figure:nth-child(5) {
+  animation-delay: 24s;
+  background-image: url('https://wallpapercave.com/wp/wp2062265.jpg');
+}
+@keyframes
+imageAnimation {  0% {
+ animation-timing-function: ease-in;
+ opacity: 0;
+}
+ 8% {
+ animation-timing-function: ease-out;
+ opacity: 0.3;
+}
+ 17% {
+ opacity: 0.35;
+}
+ 25% {
+ opacity: 0
+}
+ 100% {
+ opacity: 0
+}
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

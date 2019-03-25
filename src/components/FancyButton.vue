@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/about" class="button">Start</router-link>
+    <router-link to="/picker" class="button">Start</router-link>
 </template>
 
 <script>
