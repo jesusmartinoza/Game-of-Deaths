@@ -1,5 +1,5 @@
 <template>
-    <a href="#" class="button">Start</a>
+    <router-link to="/about" class="button">Start</router-link>
 </template>
 
 <script>

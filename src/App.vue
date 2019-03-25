@@ -1,19 +1,12 @@
 <template>
   <div id="app">
-      <MainScreen />
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import MainScreen from './components/MainScreen.vue'
-
-export default {
-  name: 'app',
-  components: {
-    MainScreen
-  }
-}
-</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Cinzel|Crimson+Text');
