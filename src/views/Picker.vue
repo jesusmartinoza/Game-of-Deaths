@@ -1,6 +1,7 @@
 <template>
   <div class="picker">
     <h2>Who will die in season 8?</h2>
+    <h4>Guess and bet with your friends about the final season of Game Of Thrones</h4>
     <div class="characters">
       <div class="character" v-for="character in all" :key="character.id">
         <img :src="require('../assets/characters/' + character.picture)" alt="Game of Deaths - ${character.picture}">
@@ -50,11 +51,15 @@ export default {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#364154', endColorstr='#0a2535',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   margin: 0.5em;
   padding: 0.5em;
-  width: 140px;
+  width: 120px;
 }
 
 .character img {
   width: 100%;
+}
+
+.character p {
+  height: 30px;
 }
 
 </style>
