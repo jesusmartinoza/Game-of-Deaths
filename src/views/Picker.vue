@@ -35,6 +35,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .character {
@@ -52,7 +54,6 @@ export default {
 }
 
 .character img {
-  height: 100px;
   width: 100%;
 }
 
