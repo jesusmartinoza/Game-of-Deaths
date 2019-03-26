@@ -49,7 +49,7 @@
 }
 
 body {
-  background-color: black;
+  background-color: #111;
 }
 
 /* Background animation

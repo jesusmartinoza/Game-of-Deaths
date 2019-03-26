@@ -50,8 +50,12 @@ const state = {
     new Character(34, "Qyburn", "qyburn.png"),
     new Character(35, "Hot Pie", "hot_pie.png"),
     new Character(36, "Eddison Tollett", "eddison_tollett.png"),
+    new Character(37, "Drogon", "drogon.png"),
+    new Character(38, "Rhaegal", "rhaegal.png"),
   ]
 };
+
+state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name));
 
 /*for(var c of state.characters) {
   console.log(`new Character(${c.id}, "${c.name}", "${c.name.toLowerCase().trim().replace(' ', '_')}.png"),`)

@@ -48,10 +48,17 @@ export default {
   background: linear-gradient(45deg, #364154 0%,#0a2535 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   backdrop-filter: blur(2px);
   border-radius: 3px;
+  box-shadow: 0px 0px 8px #000a;
+  cursor: pointer;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#364154', endColorstr='#0a2535',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   margin: 0.5em;
   padding: 0.5em;
+  transition: 500ms;
   width: 120px;
+}
+
+.character:hover {
+  transform: scale(1.05);
 }
 
 .character img {
