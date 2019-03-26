@@ -52,6 +52,8 @@ const state = {
     new Character(36, "Eddison Tollett", "eddison_tollett.png"),
     new Character(37, "Drogon", "drogon.png"),
     new Character(38, "Rhaegal", "rhaegal.png"),
+    new Character(39, "Viserion", "viserion.png"),
+    new Character(40, "Night King", "night_king.png"),
   ]
 };
 

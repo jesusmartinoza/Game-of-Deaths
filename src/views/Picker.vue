@@ -9,15 +9,22 @@
       </div>
     </div>
 
-    <h2>Who will gonna be the king of Westeros?</h2>
+    <SocialLogin />
+
+    <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import SocialLogin from '../components/SocialLogin.vue'
+
 
 export default {
   name: "Picker",
+  components: {
+    SocialLogin
+  },
   methods: {
     ...mapActions(['getCharacters'])
   },
