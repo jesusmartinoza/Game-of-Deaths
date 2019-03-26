@@ -1,7 +1,7 @@
 <template>
   <div class="picker">
-    <h2>Who will die in season 8?</h2>
-    <h4>Guess and bet with your friends about the final season of Game Of Thrones</h4>
+    <h2 class="glow-text">Who will die in season 8?</h2>
+    <h3>Guess and bet with your friends about the final season of Game Of Thrones</h3>
     <div class="characters">
       <div class="character" v-for="character in all" :key="character.id">
         <img :src="require('../assets/characters/' + character.picture)" alt="Game of Deaths - ${character.picture}">
@@ -9,6 +9,7 @@
       </div>
     </div>
 
+    <h3 class="glow-text">Please login to save your prediction</h3>
     <SocialLogin />
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
@@ -18,7 +19,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import SocialLogin from '../components/SocialLogin.vue'
-
 
 export default {
   name: "Picker",
@@ -36,6 +36,9 @@ export default {
 </script>
 
 <style scoped>
+.picker {
+  margin: 1em;
+}
 .characters {
   align-items: center;
   display: -webkit-flex; /* Safari */
@@ -54,12 +57,11 @@ export default {
   background: -webkit-linear-gradient(45deg, #364154 0%,#0a2535 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(45deg, #364154 0%,#0a2535 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   backdrop-filter: blur(2px);
-  border-radius: 3px;
+  border-radius: 13px 3px 13px 3px;
   box-shadow: 0px 0px 8px #000a;
   cursor: pointer;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#364154', endColorstr='#0a2535',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   margin: 0.5em;
-  padding: 0.5em;
   transition: 500ms;
   width: 120px;
 }
@@ -69,11 +71,14 @@ export default {
 }
 
 .character img {
+  border-radius: 13px 3px 0 0;
   width: 100%;
 }
 
 .character p {
-  height: 30px;
+  font-size: 18px;
+  height: 40px;
+  margin: 0.25em 0.5em;
 }
 
 </style>

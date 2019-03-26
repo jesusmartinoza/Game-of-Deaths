@@ -38,6 +38,10 @@
   width: 100%;
 }
 
+.glow-text {
+  text-shadow: 0px 0px 4px #ffa8;
+}
+
 .fade-enter-active, .fade-leave-active {
   -webkit-transition: opacity 1s, transform 500ms ease; /* Safari */
   transition: opacity 1s, transform 500ms ease;

@@ -49,7 +49,6 @@ $color: #FFB309;
   &:hover {
     background-color: $color;
     color: #fff;
-    border-bottom: 4px solid darken($color, 10%);
     &:before {
       transform: skewX(-45deg) translateX(13.5em);
      transition: all 0.5s ease-in-out;
