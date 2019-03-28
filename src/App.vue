@@ -7,7 +7,7 @@
     <transition appear
       name="fade"
       mode="out-in">
-        <router-view/>
+        <router-view class="view"/>
     </transition>
 
     <div class="crossfade">
@@ -17,8 +17,23 @@
       <figure></figure>
       <figure></figure>
     </div>
+
   </div>
 </template>
+
+<script>
+
+export default {
+  /*props: {
+    isInPrediction: false
+  },
+  watch:{
+    $route (to, from){
+        this.isInPrediction = to.name == "prediction";
+    }
+  }*/
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Cinzel|Crimson+Text');
@@ -29,13 +44,23 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
+  height: 100%;
   margin-top: 60px;
+  width: 100%;
 }
 
 #logo {
   margin-bottom: 2em;
   max-width: 400px;
-  width: 100%;
+  width: 85%;
+}
+
+.show {
+  display: auto;
+}
+
+.hide {
+  display: none;
 }
 
 .glow-text {
@@ -54,6 +79,15 @@
 
 body {
   background-color: #111;
+}
+
+body, .view {
+  height: 100%;
+}
+
+html {
+  min-height: 100%;
+  position: relative;
 }
 
 /* Background animation
@@ -104,10 +138,10 @@ imageAnimation {
 }
  8% {
  animation-timing-function: ease-out;
- opacity: 0;/*1;*/
+ opacity: 1;/*1;*/
 }
  20% {
- opacity: 0;/*1;*/
+ opacity: 1;/*1;*/
 }
  25% {
  opacity: 0

@@ -10,7 +10,11 @@
     </div>
 
     <h3 class="glow-text">Please login to save your prediction</h3>
-    <SocialLogin />
+
+    <!-- Temporal routing -->
+    <router-link to="/prediction">
+      <SocialLogin />
+    </router-link>
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
