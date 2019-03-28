@@ -4,22 +4,35 @@
       This are my prediction for Season 8
     </h2>
 
-    <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/>
+    <!-- <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/> -->
     <div class="container">
-      <p>aa</p>
-      <p>aa</p>
-      <p>aa</p>
+      <div class="characters">
+        <Character v-for="character in all" :key="character.id"
+          :name = "character.name"
+          :picture = "character.picture"
+          />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import SocialLogin from '../components/SocialLogin.vue'
+import Character from '../components/Character.vue'
 
 export default {
     name : 'PredictionScreen',
+    created(){
+      this.getPredictionByUser("1");
+    },
+    computed: mapGetters(['all']),
     components: {
-      SocialLogin
+      SocialLogin,
+      Character
+    },
+    methods: {
+      ...mapActions(['getPredictionByUser'])
     }
 }
 </script>

@@ -77,6 +77,17 @@ export default {
   transform: translateY(8px);
 }
 
+.characters {
+  align-items: center;
+  display: -webkit-flex; /* Safari */
+  -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 body {
   background-color: #111;
 }

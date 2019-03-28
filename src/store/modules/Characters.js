@@ -68,15 +68,15 @@ const getters = {
 };
 
 const actions = {
-  async getCharacters({ commit }) {
-      await db.collection("characters")
-        .get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.data())
-            /*if(!state.characters.includes(doc.data()))
-              commit('addCharacter', doc.data());*/
-          });
-      });
+  async getPredictionByUser({ commit }, userId) {
+    await db.collection(`people/${userId}/prediction`)
+      .get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          /*if(!state.characters.includes(doc.data()))
+            commit('addCharacter', doc.data());*/
+        });
+    });
   }
 };
 const mutations = {
