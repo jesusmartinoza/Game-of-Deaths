@@ -4,16 +4,18 @@ import 'firebase/firestore'
 var db = firebase.firestore();
 
 class Character {
-  constructor(id, name, picture, selected = false) {
+  constructor(id, name, picture, isDead = false, isKing = false) {
     this.id = id;
     this.name = name;
     this.picture = picture;
-    this.selected = selected;
+    this.isDead = isDead;
+    this.isKing = isKing;
   }
 }
 
 // Hard coded characters to save up firebase read transactions
 const state = {
+  king : new Character(1, "Jon Snow", "jon_snow.png"),
   characters : [
     new Character(1, "Jon Snow", "jon_snow.png"),
     new Character(2, "Daenerys Targaryen", "daenerys.png"),
@@ -34,7 +36,7 @@ const state = {
     new Character(17, "Euron Greyjoy", "euron_greyjoy.png"),
     new Character(18, "The Hound", "the_hound.png"),
     new Character(19, "Bronn", "bronn.png"),
-    new Character(20, "Tormund Giantsbane", "tormund_giantsbane.png"),
+    new Character(20, "Tormund", "tormund_giantsbane.png"),
     //new Character(21, "Gendry", "gendry.png"),
     new Character(23, "Yara Greyjoy", "yara_greyjoy.png"),
     new Character(24, "Grey Worm", "grey_worm.png"),
@@ -64,7 +66,8 @@ state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name))
 }*/
 
 const getters = {
-  all: state => state.characters
+  all: state => state.characters,
+  king: state => state.king
 };
 
 const actions = {
@@ -72,15 +75,33 @@ const actions = {
     await db.collection(`people/${userId}/prediction`)
       .get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data())
           /*if(!state.characters.includes(doc.data()))
             commit('addCharacter', doc.data());*/
         });
     });
+  },
+
+  async getKingByUser({ commit }, userId) {
+    var i = 0;
+    var kingId = 6;
+
+    for(let c of state.characters) {
+      if(i < 15) {
+        setTimeout(() => {
+          commit('kingTest', c);
+        }, 100 * ++i);
+      }
+    }
+
+    setTimeout(() => {
+      var king = new Character(40, "Night King", "night_king.png", true, true);
+      commit('kingTest', king);
+    }, 100 * 15);
   }
 };
 const mutations = {
-  addCharacter: (state, character) => (state.characters.push(character))
+  addCharacter: (state, character) => (state.characters.push(character)),
+  kingTest: (state, character) => (state.king = character)
 };
 
 export default {

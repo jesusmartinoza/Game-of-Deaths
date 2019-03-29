@@ -1,8 +1,9 @@
 <template>
   <div class="character">
-    <div id="crown" v-if="isKing"><span></span></div>
-    <span id="dizzy" class="emoji" v-if="isDead">😵<span></span></span>
+    <div id="crown" :class="[ isKing ? 'scaleUp' : '' ]"><span></span></div>
+    <span id="dizzy" v-if="isDead">😵<span></span></span>
     <img :src="require('../assets/characters/' + picture)" alt="Game of Deaths - ${name}">
+    <p class="triangle-bottom-left"></p>
     <p>{{name}}</p>
   </div>
 </template>
@@ -18,12 +19,6 @@ export default {
 </script>
 
 <style scoped>
-.emoji {
-  position: absolute;
-  right: -10px;
-  overflow: hidden;
-}
-
 #dizzy {
   font-size: 44px;
   position: absolute;
@@ -34,18 +29,20 @@ export default {
 
 .character {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#364154+0,0a2535+100 */
-  background: #364154; /* Old browsers */
-  background: -moz-linear-gradient(45deg, #364154 0%, #0a2535 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(45deg, #364154 0%,#0a2535 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(45deg, #364154 0%,#0a2535 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #1F3345; /* Old browsers */
+  /* background: -moz-linear-gradient(45deg, #364154 0%, #0a2535 100%);
+  background: -webkit-linear-gradient(45deg, #364154 0%,#0a2535 100%);
+  background: linear-gradient(45deg, #364154 0%,#0a2535 100%); */
   border-radius: 13px 3px 13px 3px;
   box-shadow: 0px 0px 8px #000a;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#364154', endColorstr='#0a2535',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   margin: 0.5em;
   position: relative;
   transition: 500ms;
-  width: 120px;
+  width: 170px;
 }
 
 .character:hover {
@@ -54,13 +51,24 @@ export default {
 
 .character img {
   border-radius: 13px 3px 0 0;
+  height: 170px;
   width: 100%;
 }
 
 .character p {
   font-size: 18px;
-  height: 40px;
-  margin: 0.25em 0.5em;
+  margin: 0 0.3em 0.5em 0.3em;
+}
+
+.triangle-bottom-left {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 12px 170px;
+  margin: 0 !important;
+  position: absolute;
+  bottom: 29px;
+  border-color: transparent transparent #203345 transparent;
 }
 
 /**
@@ -75,7 +83,9 @@ export default {
   position: absolute;
   right: -20px;
   top: -20px;
-  transform: rotateZ(10deg);
+  transition: transform 0.6s cubic-bezier(0.39, 0.475, 0.565, 1.37);
+  transition-delay: 400ms;
+  transform: rotateZ(10deg) scale(0);
   width: 55px;
 }
 
@@ -88,10 +98,60 @@ export default {
   border-radius: 50%;
 
   opacity: 0.8;
+  transform: rotateZ(-60deg);
 	transition-property: all;
 
 	height: 44px;
 	width: 55px;
+}
+
+.scaleUp {
+  transform: rotateZ(15deg) scale(1) !important;
+}
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
 }
 
 @keyframes sheen {

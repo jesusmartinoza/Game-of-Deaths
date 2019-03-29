@@ -1,28 +1,33 @@
 <template>
   <div>
     <h2 class="glow-text">
-      This are my prediction for Season 8
+      Jesús's prediction for Season 8
     </h2>
+    <p id="date" class="glow-text">
+      Prediction done on June 22, 2019
+    </p>
 
-    <!-- <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/> -->
+    <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/>
     <div class="container">
       <h3>
         They will die
       </h3>
       <div class="characters">
-        <Character v-for="character in all" :key="character.id"
-          :name = "character.name"
-          :picture = "character.picture"
-          :isDead = "true"
+        <Character v-for="character in all"
+          :key="character.id"
+          :name="character.name"
+          :picture="character.picture"
+          :isDead="true"
           />
       </div>
 
       <h3>
         And the King of Westeros will be...
       </h3>
-      <p id="king-of-westeros">
-        <Character name="Knight King" picture="night_king.png" isKing="true" />
-      </p>
+        <Character id="king-of-westeros"
+          :name="king.name"
+          :picture="king.picture"
+          :isKing="king.isKing" />
     </div>
   </div>
 </template>
@@ -36,25 +41,22 @@ export default {
     name : 'PredictionScreen',
     created(){
       this.getPredictionByUser("1");
+      this.getKingByUser("1");
     },
-    computed: mapGetters(['all']),
+    computed: mapGetters(['all', 'king']),
     components: {
       SocialLogin,
       Character
     },
     methods: {
-      ...mapActions(['getPredictionByUser'])
+      ...mapActions(['getPredictionByUser', 'getKingByUser'])
     }
 }
 </script>
 
 <style scoped>
-#king-of-westeros .character {
+#king-of-westeros {
   margin: auto;
-}
-
-h2 {
-  margin-bottom: 3em;
 }
 
 h3 {
@@ -62,11 +64,15 @@ h3 {
   font-size: 24px;
 }
 
+#date {
+  font-size: 18px;
+  margin-bottom: 7em;
+}
+
 .container {
   background-color: #fff;
   min-height: 100vh;
-  margin-bottom: -1.25em; /* Super hacky x_x */
-  margin-top: -1.25em; /* Super hacky x_x */
+  margin-top: -5px; /* Super hacky x_x */
   padding-bottom: 2em;
   padding-top: 2em;
 }
