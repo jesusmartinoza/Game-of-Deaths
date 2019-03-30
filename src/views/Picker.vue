@@ -9,7 +9,7 @@
 
     <h3 class="glow-text">Please login to sign your prediction</h3>
 
-    <SocialLogin @click.native="savePrediction" />
+    <SocialLogin @click.native="signWithGoogle" />
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
@@ -32,6 +32,15 @@ export default {
   },
   computed: mapGetters(['all']),
   methods: {
+    ...mapActions(['loginWithGoogle', 'loginWithFacebook']),
+
+    signWithGoogle() {
+      this.loginWithGoogle();
+    },
+    
+    /**
+     * Get all characters marked as dead and send it to Firebase
+     */
     savePrediction() {
       var prediction = this.all.filter( c => c.isDead);
       var userRef = db.collection('people').doc('1');
@@ -41,7 +50,7 @@ export default {
 
       userRef.set({
         prediction: prediction
-      });
+      }, {merge:true});
     }
   }
 }

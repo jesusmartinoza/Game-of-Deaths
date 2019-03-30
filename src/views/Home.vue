@@ -7,11 +7,12 @@
       Game of Thrones!
     </h1>
 
-    <FancyButton id="fancy-button" />
+    <FancyButton id="fancy-button" text="Start" />
 
     <p>Already have a prediction? <br> Login </p>
 
-    <SocialLogin />
+    <SocialLogin v-if="!isAuthenticated" />
+    <FancyButton v-else :text="Logout"></FancyButton>
 
     <footer>
       <!--p>
@@ -33,7 +34,19 @@ export default {
     components: {
       FancyButton,
       SocialLogin
+    },
+    computed: {
+      isAuthenticated() {
+        console.log(this.$store.getters.isAuthenticated)
+        return this.$store.getters.isAuthenticated;
+      }
+    },
+    methods: {
+      logout() {
+        this.$store.dispatch('userSignOut');
+      }
     }
+
 }
 </script>
 

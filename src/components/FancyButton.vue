@@ -1,10 +1,11 @@
 <template>
-    <router-link to="/picker" class="button">Start</router-link>
+    <router-link to="/picker" class="button">{{text}}</router-link>
 </template>
 
 <script>
 export default {
-    name : 'FancyButton'
+  name: 'FancyButton',
+  props: ['text']
 }
 </script>
 

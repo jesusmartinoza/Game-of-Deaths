@@ -1,8 +1,9 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 
-var db = firebase.firestore();
-
+/**
+ * Class to represent a Game Of Thrones Character
+ */
 class Character {
   constructor(id, name, picture, isDead = false, isKing = false) {
     this.id = id;
@@ -12,6 +13,8 @@ class Character {
     this.isKing = isKing;
   }
 }
+
+var db = firebase.firestore();
 
 // Hard coded characters to save up firebase read transactions
 const state = {
@@ -60,11 +63,8 @@ const state = {
   prediction: []
 };
 
+// Sort by name
 state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name));
-
-/*for(var c of state.characters) {
-  console.log(`new Character(${c.id}, "${c.name}", "${c.name.toLowerCase().trim().replace(' ', '_')}.png"),`)
-}*/
 
 const getters = {
   all: state => state.characters,
@@ -73,35 +73,49 @@ const getters = {
 };
 
 const actions = {
+  /**
+  * Read prediction from userId
+  **/
   async getPredictionByUser({ commit }, userId) {
-    console.log(userId)
     await db.doc(`people/${userId}`)
       .get().then((querySnapshot) => {
         commit('setPrediction', querySnapshot.data().prediction);
+        commit('setKing', querySnapshot.data().king);
     });
   },
 
+  /**
+  * Get king selection by userId
+  *
+  * This method is a tricky one 'cause it iterates over N characters.
+  * The goal is to simulate a roulette and finally set the king of Westeros!
+  **/
   async getKingByUser({ commit }, userId) {
     var i = 0;
-    var kingId = 6;
+    var limit = 15;
 
     for(let c of state.characters) {
-      if(i < 15) {
+      if(i < limit) {
         setTimeout(() => {
-          commit('kingTest', c);
+          commit('setKing', c);
         }, 100 * ++i);
       }
     }
 
+    // When finish to mutate beetween characters
+    // then read from Firebase the right king
     setTimeout(() => {
-      var king = new Character(40, "Night King", "night_king.png", true, true);
-      commit('kingTest', king);
-    }, 100 * 15);
+      db.doc(`people/${userId}`)
+        .get().then((querySnapshot) => {
+          commit('setKing', querySnapshot.data().king);
+      });
+    }, 100 * limit);
   }
 };
+
 const mutations = {
   setPrediction: (state, characters) => (state.prediction = characters),
-  kingTest: (state, character) => (state.king = character)
+  setKing: (state, character) => (state.king = character)
 };
 
 export default {

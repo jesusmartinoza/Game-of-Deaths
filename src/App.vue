@@ -10,6 +10,7 @@
         <router-view class="view"/>
     </transition>
 
+    <!-- Background crossfade animation -->
     <div class="crossfade">
       <figure></figure>
       <figure></figure>

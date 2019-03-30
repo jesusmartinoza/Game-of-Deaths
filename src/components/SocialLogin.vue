@@ -1,14 +1,29 @@
 <template>
   <div id="social-btns">
-    <button class="movebtn google" type="Submit">Google <font-awesome-icon :icon="['fab', 'google']"/></button>
-    <button class="movebtn facebook" type="Submit">Facebook <font-awesome-icon :icon="['fab', 'facebook-f']"/></button>
+    <button class="movebtn google" v-on:click="loginGoogle">Google <font-awesome-icon :icon="['fab', 'google']"/></button>
+    <button class="movebtn facebook" v-on:click="loginFacebook">Facebook <font-awesome-icon :icon="['fab', 'facebook-f']"/></button>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase';
 
 export default {
-  name: "SocialLogin"
+  name: "SocialLogin",
+  methods : {
+    /**
+     * Google Auth using Firebase
+     */
+    loginGoogle() {
+    },
+
+    /**
+     * Facebook Auth using Firebase
+     */
+    loginFacebook() {
+
+    }
+  }
 }
 </script>
 

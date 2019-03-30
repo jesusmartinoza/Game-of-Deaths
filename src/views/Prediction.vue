@@ -37,9 +37,9 @@ import Character from '../components/Character.vue'
 
 export default {
     name : 'PredictionScreen',
-    created(){
+    created() {
       this.getPredictionByUser("1");
-      this.getKingByUser("1");
+      //this.getKingByUser("1");
     },
     computed: mapGetters(['all', 'king', 'prediction']),
     components: {
