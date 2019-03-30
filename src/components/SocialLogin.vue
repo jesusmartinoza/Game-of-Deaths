@@ -1,7 +1,8 @@
 <template>
   <div id="social-btns">
-    <button class="movebtn google" v-on:click="loginGoogle">Google <font-awesome-icon :icon="['fab', 'google']"/></button>
-    <button class="movebtn facebook" v-on:click="loginFacebook">Facebook <font-awesome-icon :icon="['fab', 'facebook-f']"/></button>
+    <button class="movebtn" :class="[ provider == 'Google' ? 'google' : 'facebook' ]">
+      {{provider}} <font-awesome-icon :icon="['fab', `${icon}`]"/>
+    </button>
   </div>
 </template>
 
@@ -10,20 +11,12 @@ import firebase from 'firebase';
 
 export default {
   name: "SocialLogin",
-  methods : {
-    /**
-     * Google Auth using Firebase
-     */
-    loginGoogle() {
-    },
 
-    /**
-     * Facebook Auth using Firebase
-     */
-    loginFacebook() {
+  created() {
+    console.log(this.provider)
+  },
 
-    }
-  }
+  props: ['icon', 'provider']
 }
 </script>
 
@@ -32,11 +25,6 @@ export default {
  * Social buttons by Peeyush Gupta
  * https://codepen.io/Peeyush200/pen/mLwvJB
  */
-#social-btns {
-  display: inline-block;
-  margin: auto;
-  text-align: center;
-}
 
 button {
   padding: 8px 12px;

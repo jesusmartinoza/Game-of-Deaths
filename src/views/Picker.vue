@@ -9,7 +9,11 @@
 
     <h3 class="glow-text">Please login to sign your prediction</h3>
 
-    <SocialLogin @click.native="signWithGoogle" />
+    <div class="social-btns" v-if="!isAuthenticated">
+        <SocialLogin provider="Google" icon="google" />
+        <SocialLogin provider="Facebook" icon="facebook-f" />
+    </div>
+    <FancyButton v-else :text="Logout"></FancyButton>
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
@@ -37,7 +41,7 @@ export default {
     signWithGoogle() {
       this.loginWithGoogle();
     },
-    
+
     /**
      * Get all characters marked as dead and send it to Firebase
      */

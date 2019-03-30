@@ -11,7 +11,10 @@
 
     <p>Already have a prediction? <br> Login </p>
 
-    <SocialLogin v-if="!isAuthenticated" />
+    <div class="social-btns" v-if="!isAuthenticated">
+        <SocialLogin provider="Google" icon="google" />
+        <SocialLogin provider="Facebook" icon="facebook-f" />
+    </div>
     <FancyButton v-else :text="Logout"></FancyButton>
 
     <footer>

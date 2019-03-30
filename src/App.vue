@@ -90,6 +90,12 @@ export default {
   margin: 0 auto;
 }
 
+.social-btns {
+ display: inline-block;
+ margin: auto;
+ text-align: center;
+}
+
 body {
   background-color: #000;
 }

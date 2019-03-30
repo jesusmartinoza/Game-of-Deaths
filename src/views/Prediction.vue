@@ -39,7 +39,6 @@ export default {
     name : 'PredictionScreen',
     created() {
       this.getPredictionByUser("1");
-      //this.getKingByUser("1");
     },
     computed: mapGetters(['all', 'king', 'prediction']),
     components: {
