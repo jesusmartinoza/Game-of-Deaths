@@ -9,7 +9,7 @@
           />
     </div>
 
-    <h3 class="glow-text">Please login to save your prediction</h3>
+    <h3 class="glow-text">Please login to sign your prediction</h3>
 
     <!-- Temporal routing -->
     <router-link to="/prediction">
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style scoped>
-.picker {
+h3 {
   margin: 1em;
 }
 </style>

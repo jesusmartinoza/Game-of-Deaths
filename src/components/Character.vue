@@ -42,7 +42,7 @@ export default {
   margin: 0.5em;
   position: relative;
   transition: 500ms;
-  width: 170px;
+  width: 155px;
 }
 
 .character:hover {
@@ -51,23 +51,23 @@ export default {
 
 .character img {
   border-radius: 13px 3px 0 0;
-  height: 170px;
+  height: 155px;
   width: 100%;
 }
 
 .character p {
   font-size: 18px;
-  margin: 0 0.3em 0.5em 0.3em;
+  margin: 0.1em 0.25em 0.5em 0.25em;
 }
 
 .triangle-bottom-left {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 0 12px 170px;
+  border-width: 0 0 12px 155px;
   margin: 0 !important;
   position: absolute;
-  bottom: 29px;
+  bottom: 30px;
   border-color: transparent transparent #203345 transparent;
 }
 

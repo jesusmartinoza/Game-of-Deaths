@@ -89,7 +89,7 @@ export default {
 }
 
 body {
-  background-color: #111;
+  background-color: #000;
 }
 
 body, .view {
@@ -120,26 +120,26 @@ html {
   z-index: -9999;
 }
 
-.crossfade > figure:nth-child(1) { background-image: url('https://wallpapercave.com/wp/wp2062228.jpg'); }
+.crossfade > figure:nth-child(1) { background-image: url('./assets/wallpapers/game_of_thrones_wallpaper.jpg'); }
 
 .crossfade > figure:nth-child(2) {
   animation-delay: 15s;
-  background-image: url('https://wallpapercave.com/wp/wp2062229.jpg');
+  background-image: url('./assets/wallpapers/game_of_thrones_wallpaper_2.jpg');
 }
 
 .crossfade > figure:nth-child(3) {
   animation-delay: 30s;
-  background-image: url('https://wallpapercave.com/wp/wp2062334.jpg');
+  background-image: url('./assets/wallpapers/game_of_thrones_wallpaper_3.jpg');
 }
 
 .crossfade > figure:nth-child(4) {
   animation-delay: 45s;
-  background-image: url('https://wallpapercave.com/wp/wp2062291.jpg');
+  background-image: url('./assets/wallpapers/game_of_thrones_wallpaper_4.jpg');
 }
 
 .crossfade > figure:nth-child(5) {
   animation-delay: 60s;
-  background-image: url('https://wallpapercave.com/wp/wp2062265.jpg');
+  background-image: url('./assets/wallpapers/game_of_thrones_wallpaper_5.jpg');
 }
 @keyframes
 imageAnimation {
