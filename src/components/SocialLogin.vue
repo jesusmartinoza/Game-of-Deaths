@@ -1,11 +1,7 @@
 <template>
   <div id="social-btns">
-	  	<a href="#">
-        <button class="movebtn google" type="Submit">Google <font-awesome-icon :icon="['fab', 'google']"/></button>
-      </a>
-	  	<a href="#">
-        <button class="movebtn facebook" type="Submit">Facebook <font-awesome-icon :icon="['fab', 'facebook-f']"/></button>
-      </a>
+    <button class="movebtn google" type="Submit">Google <font-awesome-icon :icon="['fab', 'google']"/></button>
+    <button class="movebtn facebook" type="Submit">Facebook <font-awesome-icon :icon="['fab', 'facebook-f']"/></button>
   </div>
 </template>
 

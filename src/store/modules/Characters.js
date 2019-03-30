@@ -56,7 +56,8 @@ const state = {
     new Character(38, "Rhaegal", "rhaegal.png"),
     new Character(39, "Viserion", "viserion.png"),
     new Character(40, "Night King", "night_king.png"),
-  ]
+  ],
+  prediction: []
 };
 
 state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name));
@@ -67,17 +68,16 @@ state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name))
 
 const getters = {
   all: state => state.characters,
-  king: state => state.king
+  king: state => state.king,
+  prediction: state => state.prediction
 };
 
 const actions = {
   async getPredictionByUser({ commit }, userId) {
-    await db.collection(`people/${userId}/prediction`)
+    console.log(userId)
+    await db.doc(`people/${userId}`)
       .get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          /*if(!state.characters.includes(doc.data()))
-            commit('addCharacter', doc.data());*/
-        });
+        commit('setPrediction', querySnapshot.data().prediction);
     });
   },
 
@@ -100,7 +100,7 @@ const actions = {
   }
 };
 const mutations = {
-  addCharacter: (state, character) => (state.characters.push(character)),
+  setPrediction: (state, characters) => (state.prediction = characters),
   kingTest: (state, character) => (state.king = character)
 };
 

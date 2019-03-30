@@ -9,10 +9,7 @@
 
     <h3 class="glow-text">Please login to sign your prediction</h3>
 
-    <!-- Temporal routing -->
-    <router-link to="/prediction">
-      <SocialLogin />
-    </router-link>
+    <SocialLogin @click.native="savePrediction" />
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
@@ -22,6 +19,10 @@
 import { mapGetters, mapActions } from 'vuex';
 import SocialLogin from '../components/SocialLogin.vue'
 import Character from '../components/Character.vue'
+import firebase from 'firebase'
+import 'firebase/firestore'
+
+var db = firebase.firestore();
 
 export default {
   name: "Picker",
@@ -29,7 +30,20 @@ export default {
     SocialLogin,
     Character
   },
-  computed: mapGetters(['all'])
+  computed: mapGetters(['all']),
+  methods: {
+    savePrediction() {
+      var prediction = this.all.filter( c => c.isDead);
+      var userRef = db.collection('people').doc('1');
+
+      // Convert Character objects to pure JS objetcs
+      prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
+
+      userRef.set({
+        prediction: prediction
+      });
+    }
+  }
 }
 </script>
 

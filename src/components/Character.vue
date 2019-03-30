@@ -14,10 +14,11 @@ export default {
   name: "Character",
   components: {
   },
-  props: ['character', 'lightComponent'],
+  props: ['character', 'disabled'],
   methods : {
     changeStatus() {
-      this.character.isDead = !this.character.isDead;
+      if(!this.disabled)
+        this.character.isDead = !this.character.isDead;
     }
   }
 }

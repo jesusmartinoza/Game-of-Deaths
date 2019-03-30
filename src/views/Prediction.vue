@@ -13,9 +13,10 @@
         They will die
       </h3>
       <div class="characters">
-        <Character v-for="character in all"
+        <Character v-for="character in prediction"
           :key="character.id"
           :character="character"
+          :disabled="true"
           v-if="character.isDead"
           />
       </div>
@@ -24,7 +25,7 @@
         And the King of Westeros will be...
       </h3>
         <Character id="king-of-westeros"
-          :character="king" />
+          :character="king"/>
     </div>
   </div>
 </template>
@@ -40,7 +41,7 @@ export default {
       this.getPredictionByUser("1");
       this.getKingByUser("1");
     },
-    computed: mapGetters(['all', 'king']),
+    computed: mapGetters(['all', 'king', 'prediction']),
     components: {
       SocialLogin,
       Character
