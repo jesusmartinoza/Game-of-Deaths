@@ -1,20 +1,21 @@
 import firebase from 'firebase';
+import router from '@/router';
 
 const state = {
-  userData: {},
+  userData: null,
   isAuthenticated: false
 };
 
 const getters = {
   data: state => state.userData,
-  isAuthenticated : state => state.isAuthenticated
+  isAuthenticated : state => state.userData !== null && state.userData !== undefined
 };
 
 const actions = {
   /**
    * Google Auth using Firebase
    */
-  async loginWithGoogle({ commit }) {
+  loginWithGoogle({ commit }) {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then((user) => {
@@ -30,7 +31,7 @@ const actions = {
   /**
    * Facebook Auth using Firebase
    */
-  async loginWithFacebook({ commit }) {
+  loginWithFacebook({ commit }) {
     console.log("Login with Facebook")
     const provider = new firebase.auth.FacebookAuthProvider();
 
@@ -41,7 +42,23 @@ const actions = {
       console.log(err)
       alert('Oops. ' + err.message)
     });
-  }
+  },
+
+  userSignOut({ commit }) {
+      firebase
+          .auth()
+          .signOut()
+          .then(() => {
+              commit('setUserData', null);
+              commit('setIsAuthenticated', false);
+              router.push('/');
+          })
+          .catch(() => {
+              commit('setUserData', null);
+              commit('setIsAuthenticated', false);
+              router.push('/');
+          });
+  },
 };
 
 const mutations = {

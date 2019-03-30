@@ -1,7 +1,7 @@
 <template>
   <div id="social-btns">
-    <button class="movebtn" :class="[ provider == 'Google' ? 'google' : 'facebook' ]">
-      {{provider}} <font-awesome-icon :icon="['fab', `${icon}`]"/>
+    <button class="movebtn" :class="[ provider == 'Google' ? 'google' : provider == 'Facebook' ? 'facebook' : '' ]">
+      {{provider}} <font-awesome-icon :icon="[`${package}`, `${icon}`]"/>
     </button>
   </div>
 </template>
@@ -11,12 +11,7 @@ import firebase from 'firebase';
 
 export default {
   name: "SocialLogin",
-
-  created() {
-    console.log(this.provider)
-  },
-
-  props: ['icon', 'provider']
+  props: ['icon', 'package', 'provider']
 }
 </script>
 

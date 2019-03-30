@@ -9,13 +9,15 @@
 
     <FancyButton id="fancy-button" text="Start" />
 
-    <p>Already have a prediction? <br> Login </p>
 
     <div class="social-btns" v-if="!isAuthenticated">
-        <SocialLogin provider="Google" icon="google" />
-        <SocialLogin provider="Facebook" icon="facebook-f" />
+        <p>Already have a prediction? <br> Login </p>
+        <SocialLogin provider="Google" package="fab" icon="google" @click.native="loginWithGoogle" />
+        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" />
     </div>
-    <FancyButton v-else :text="Logout"></FancyButton>
+    <div v-else>
+      <SocialLogin provider="Logout" icon="sign-out-alt" package="fas" @click.native="logout" />
+    </div>
 
     <footer>
       <!--p>
@@ -45,6 +47,11 @@ export default {
       }
     },
     methods: {
+      loginWithGoogle() {
+        console.log("login")
+        this.$store.dispatch('loginWithGoogle');
+      },
+
       logout() {
         this.$store.dispatch('userSignOut');
       }

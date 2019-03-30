@@ -91,7 +91,7 @@ export default {
 }
 
 .social-btns {
- display: inline-block;
+ display: block;
  margin: auto;
  text-align: center;
 }
