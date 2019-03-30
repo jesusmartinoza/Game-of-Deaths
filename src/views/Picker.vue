@@ -4,9 +4,7 @@
     <h3>Guess and bet with your friends about the final season of Game Of Thrones</h3>
     <div class="characters">
         <Character v-for="character in all" :key="character.id"
-          :name = "character.name"
-          :picture = "character.picture"
-          />
+          :character="character" />
     </div>
 
     <h3 class="glow-text">Please login to sign your prediction</h3>

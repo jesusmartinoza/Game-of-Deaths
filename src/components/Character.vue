@@ -1,10 +1,10 @@
 <template>
-  <div class="character">
-    <div id="crown" :class="[ isKing ? 'scaleUp' : '' ]"><span></span></div>
-    <span id="dizzy" v-if="isDead">😵<span></span></span>
-    <img :src="require('../assets/characters/' + picture)" alt="Game of Deaths - ${name}">
+  <div class="character" v-on:click="changeStatus">
+    <div id="crown" :class="{'scaleUp': character.isKing}"><span></span></div>
+    <span id="dizzy" :class="{'scaleUp': character.isDead && !character.isKing}">😵<span></span></span>
+    <img :src="require('../assets/characters/' + character.picture)" alt="Game of Deaths - ${character.name}">
     <p class="triangle-bottom-left"></p>
-    <p>{{name}}</p>
+    <p>{{character.name}}</p>
   </div>
 </template>
 
@@ -14,7 +14,12 @@ export default {
   name: "Character",
   components: {
   },
-  props: ['name', 'picture', 'isDead', 'isKing', 'lightComponent']
+  props: ['character', 'lightComponent'],
+  methods : {
+    changeStatus() {
+      this.character.isDead = !this.character.isDead;
+    }
+  }
 }
 </script>
 
@@ -24,7 +29,8 @@ export default {
   position: absolute;
   right: -10px;
   top: -5px;
-  transform: rotateZ(10deg);
+  transition: 150ms ease-out;
+  transform: rotateZ(10deg) scale(0);
 }
 
 .character {
@@ -46,7 +52,7 @@ export default {
 }
 
 .character:hover {
-  transform: scale(1.05);
+  opacity: 0.8;
 }
 
 .character img {

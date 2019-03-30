@@ -15,9 +15,8 @@
       <div class="characters">
         <Character v-for="character in all"
           :key="character.id"
-          :name="character.name"
-          :picture="character.picture"
-          :isDead="true"
+          :character="character"
+          v-if="character.isDead"
           />
       </div>
 
@@ -25,9 +24,7 @@
         And the King of Westeros will be...
       </h3>
         <Character id="king-of-westeros"
-          :name="king.name"
-          :picture="king.picture"
-          :isKing="king.isKing" />
+          :character="king" />
     </div>
   </div>
 </template>
