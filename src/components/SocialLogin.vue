@@ -25,9 +25,9 @@ button {
   padding: 8px 12px;
   margin: 4px 0;
   font-family: 'Montserrat', sans-serif;
-  border: 2px solid #78788c;
+  border: 2px solid #fff;
   background: 0;
-  color: #5a5a6e;
+  color: #fff;
   cursor: pointer;
   transition: all .3s;
 }

@@ -2,18 +2,25 @@
   <div class="picker">
     <h2 class="glow-text">Who will die in season 8?</h2>
     <h3>Guess and bet with your friends about the final season of Game Of Thrones</h3>
-    <div class="characters">
+    <div class="characters margin-bottom">
         <Character v-for="character in all" :key="character.id"
           :character="character" />
     </div>
 
-    <h3 class="glow-text">Please login to sign your prediction</h3>
-
     <div class="social-btns" v-if="!isAuthenticated">
-        <SocialLogin provider="Google" icon="google" />
-        <SocialLogin provider="Facebook" icon="facebook-f" />
+        <h3 class="glow-text">Please login to sign your prediction</h3>
+        <SocialLogin provider="Google" package="fab" icon="google" @click.native="signWithGoogle" />
+        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" />
     </div>
-    <FancyButton v-else :text="Logout"></FancyButton>
+
+    <div class="margin-top" v-else>
+      <font-awesome-icon :icon="['fas', 'exclamation-circle']"/>
+      It seems that you already have a prediction. <br> Clicking on save will update the date.
+
+      <p>
+        <FancyButton text="Save" @click.native="savePrediction" />
+      </p>
+    </div>
 
     <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
   </div>
@@ -22,6 +29,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import SocialLogin from '../components/SocialLogin.vue'
+import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
 import firebase from 'firebase'
 import 'firebase/firestore'
@@ -32,14 +40,22 @@ export default {
   name: "Picker",
   components: {
     SocialLogin,
-    Character
+    Character,
+    FancyButton
   },
-  computed: mapGetters(['all']),
-  methods: {
-    ...mapActions(['loginWithGoogle', 'loginWithFacebook']),
+  computed: {
+    ...mapGetters(['all']),
 
+    isAuthenticated() {
+      var isAuthenticated = this.$store.getters.isAuthenticated;
+      console.log(isAuthenticated)
+
+      return isAuthenticated;
+    }
+  },
+  methods: {
     signWithGoogle() {
-      this.loginWithGoogle();
+      this.$store.dispatch('loginWithGoogle');
     },
 
     /**
@@ -47,14 +63,7 @@ export default {
      */
     savePrediction() {
       var prediction = this.all.filter( c => c.isDead);
-      var userRef = db.collection('people').doc('1');
-
-      // Convert Character objects to pure JS objetcs
-      prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
-
-      userRef.set({
-        prediction: prediction
-      }, {merge:true});
+      this.$store.dispatch('savePrediction', prediction);
     }
   }
 }

@@ -9,7 +9,6 @@
 
     <FancyButton id="fancy-button" text="Start" />
 
-
     <div class="social-btns" v-if="!isAuthenticated">
         <p>Already have a prediction? <br> Login </p>
         <SocialLogin provider="Google" package="fab" icon="google" @click.native="loginWithGoogle" />
@@ -33,6 +32,9 @@
 <script>
 import FancyButton from '../components/FancyButton.vue'
 import SocialLogin from '../components/SocialLogin.vue'
+import router from '@/router';
+
+var routeChange = false;
 
 export default {
     name : 'MainScreen',
@@ -40,12 +42,21 @@ export default {
       FancyButton,
       SocialLogin
     },
+    created() {
+      routeChange = false;
+    },
+
     computed: {
       isAuthenticated() {
-        console.log(this.$store.getters.isAuthenticated)
-        return this.$store.getters.isAuthenticated;
+        var isAuthenticated = this.$store.getters.isAuthenticated;
+        console.log(isAuthenticated)
+
+        if(isAuthenticated)
+          router.push("/picker")
+        return isAuthenticated;
       }
     },
+
     methods: {
       loginWithGoogle() {
         console.log("login")
@@ -56,7 +67,6 @@ export default {
         this.$store.dispatch('userSignOut');
       }
     }
-
 }
 </script>
 

@@ -57,16 +57,15 @@ export default {
   width: 85%;
 }
 
-.show {
-  display: auto;
-}
-
-.hide {
-  display: none;
-}
-
-.glow-text {
-  text-shadow: 0px 0px 4px #ffa8;
+.characters {
+  align-items: center;
+  display: -webkit-flex; /* Safari */
+  -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -79,15 +78,25 @@ export default {
   transform: translateY(8px);
 }
 
-.characters {
-  align-items: center;
-  display: -webkit-flex; /* Safari */
-  -webkit-flex-wrap: wrap; /* Safari 6.1+ */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 980px;
-  margin: 0 auto;
+.glow-text {
+  text-shadow: 0px 0px 4px #ffa8;
+}
+
+/** OCSS */
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: auto;
 }
 
 .social-btns {

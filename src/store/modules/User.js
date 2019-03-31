@@ -18,9 +18,9 @@ const actions = {
   loginWithGoogle({ commit }) {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then((user) => {
-      console.log(user)
-      commit('setUserData', user);
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      console.log(result)
+      commit('setUserData', result.user);
       commit('setIsAuthenticated', true);
     }).catch((err) => {
       console.log(err)
@@ -32,11 +32,10 @@ const actions = {
    * Facebook Auth using Firebase
    */
   loginWithFacebook({ commit }) {
-    console.log("Login with Facebook")
     const provider = new firebase.auth.FacebookAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then((user) => {
-      commit('setUserData', user);
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      commit('setUserData', result.user);
       commit('setIsAuthenticated', true);
     }).catch((err) => {
       console.log(err)

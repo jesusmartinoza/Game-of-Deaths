@@ -13,12 +13,19 @@
         They will die
       </h3>
       <div class="characters">
-        <Character v-for="character in prediction"
-          :key="character.id"
-          :character="character"
-          :disabled="true"
-          v-if="character.isDead"
-          />
+        <transition-group
+          name="list"
+          v-on:before-enter="beforeEnter"
+          v-on:enter="enter">
+            <Character v-for="(character, index) in prediction"
+              class="list-item"
+              :key="character.id"
+              :character="character"
+              :disabled="true"
+              v-if="character.isDead"
+              v-bind:data-index="index"
+            />
+        </transition-group>
       </div>
 
       <h3>
@@ -38,7 +45,8 @@ import Character from '../components/Character.vue'
 export default {
     name : 'PredictionScreen',
     created() {
-      this.getPredictionByUser("1");
+      var id = this.$route.query.id;
+      this.getPredictionByUser(id);
     },
     computed: mapGetters(['all', 'king', 'prediction']),
     components: {
@@ -46,7 +54,20 @@ export default {
       Character
     },
     methods: {
-      ...mapActions(['getPredictionByUser', 'getKingByUser'])
+      ...mapActions(['getPredictionByUser', 'getKingByUser']),
+      beforeEnter: function (el) {
+        el.style.opacity = 0
+      },
+      enter: function (el, done) {
+          var delay = el.dataset.index * 300
+          setTimeout(function () {
+            Velocity(
+              el,
+              { opacity: 1 },
+              { complete: done }
+            )
+          }, delay)
+        },
     }
 }
 </script>
@@ -54,11 +75,6 @@ export default {
 <style scoped>
 #king-of-westeros {
   margin: auto;
-}
-
-h3 {
-  color: black;
-  font-size: 24px;
 }
 
 #date {
@@ -76,4 +92,22 @@ h3 {
 .triangle-decorator {
   width: 100%;
 }
+
+.list-item {
+  display: inline-block;
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+h3 {
+  color: black;
+  font-size: 24px;
+}
 </style>
+

@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
+import router from '@/router'
 
 /**
  * Class to represent a Game Of Thrones Character
@@ -76,10 +77,14 @@ const actions = {
   /**
   * Read prediction from userId
   **/
-  async getPredictionByUser({ commit }, userId) {
-    await db.doc(`people/${userId}`)
+  getPredictionByUser({ commit }, userId) {
+    db.doc(`people/${userId}`)
       .get().then((querySnapshot) => {
-        commit('setPrediction', querySnapshot.data().prediction);
+        this.state.prediction = [];
+
+        for(var c of querySnapshot.data().prediction)
+          commit('addToPrediction', c);
+
         commit('setKing', querySnapshot.data().king);
     });
   },
@@ -90,7 +95,7 @@ const actions = {
   * This method is a tricky one 'cause it iterates over N characters.
   * The goal is to simulate a roulette and finally set the king of Westeros!
   **/
-  async getKingByUser({ commit }, userId) {
+  getKingByUser({ commit }, userId) {
     var i = 0;
     var limit = 15;
 
@@ -110,10 +115,33 @@ const actions = {
           commit('setKing', querySnapshot.data().king);
       });
     }, 100 * limit);
+  },
+
+  /**
+   * Receive an array of dead characters
+   * and store them in user profile info
+   **/
+  savePrediction({ commit, rootState }, prediction) {
+    var userId = rootState.user.userData.uid;
+    var userRef = db.collection('people').doc(userId);
+
+    // Convert Character objects to pure JS objetcs
+    prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
+
+    userRef.set({
+        prediction: prediction
+      }, {merge:true}
+    ).then( result => {
+      router.push('/prediction?id=' + userId);
+    });
   }
 };
 
 const mutations = {
+  addToPrediction: (state, character) => {
+    if(!state.prediction.some(c => c.id == character.id))
+      state.prediction.push(character)
+  },
   setPrediction: (state, characters) => (state.prediction = characters),
   setKing: (state, character) => (state.king = character)
 };
