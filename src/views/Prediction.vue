@@ -35,6 +35,11 @@
         <Character id="king-of-westeros"
             :character="king"/>
       </div>
+
+      <div class="margin-top">
+        <FancyButton text="Edit" v-if="showEditButton" @click.native="onEditClick" />
+        <FancyButton text="Share" @click.native="savePrediction" />
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +47,9 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SocialLogin from '../components/SocialLogin.vue'
+import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
+import router from '@/router'
 
 export default {
     name : 'PredictionScreen',
@@ -50,30 +57,41 @@ export default {
       var id = this.$route.query.id;
       this.getPredictionByUser(id);
     },
-    computed: mapGetters(['all', 'king', 'prediction']),
+    computed: {
+      ...mapGetters(['all', 'king', 'prediction']),
+
+      showEditButton() {
+        var isAuthenticated = this.$store.getters.isAuthenticated;
+        var userId = this.$store.getters.userUid;
+
+        return isAuthenticated && userId == this.$route.query.id;
+      }
+    },
     components: {
-      SocialLogin,
-      Character
+      Character,
+      FancyButton,
+      SocialLogin
     },
     methods: {
       ...mapActions(['getPredictionByUser', 'getKingByUser']),
+
       beforeEnter: function (el) {
         el.style.opacity = 0
       },
 
       enter: function (el, done) {
-          var delay = el.dataset.index * 300;
+        var delay = el.dataset.index * 300;
 
-          delay = delay % 2500; // Max animation duration to 2.5s
+        delay = delay % 2500; // Max animation duration to 2.5s
 
-          setTimeout(function () {
-            Velocity(
-              el,
-              { opacity: 1 },
-              { complete: done }
-            )
-          }, delay)
-        },
+        setTimeout(function () {
+          Velocity(el, {opacity: 1}, {complete: done});
+        }, delay);
+      },
+
+      onEditClick() {
+        router.push("/picker");
+      }
     }
 }
 </script>
@@ -95,6 +113,7 @@ export default {
   padding-bottom: 2em;
   padding-top: 2em;
 }
+
 .triangle-decorator {
   width: 100%;
 }
@@ -106,6 +125,7 @@ export default {
 .list-enter-active, .list-leave-active {
   transition: all 1s;
 }
+
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);

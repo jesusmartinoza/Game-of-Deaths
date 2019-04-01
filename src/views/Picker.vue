@@ -13,11 +13,11 @@
         <SocialLogin provider="Facebook" package="fab" icon="facebook-f" />
     </div>
 
-    <div class="margin-top" v-else>
+    <div class="margin-top prediction-box" v-else>
 
       <div v-if="hasPrediction">
-        <font-awesome-icon :icon="['fas', 'exclamation-circle']"/>
-        It seems that you already have a prediction. <br> Clicking on save will update the date.
+        <font-awesome-icon :icon="['fas', 'exclamation-circle']"/> <br>
+        It seems that you already have a prediction, <br> clicking Save will update your last prediction date.
       </div>
 
       <p>
@@ -74,5 +74,8 @@ export default {
 <style scoped>
 h3 {
   margin: 1em;
+}
+.prediction-box {
+  font-size: 18px;
 }
 </style>

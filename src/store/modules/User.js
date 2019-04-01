@@ -13,23 +13,56 @@ const state = {
 const getters = {
   data: state => state.userData,
   isAuthenticated : state => state.userData !== null && state.userData !== undefined,
-  hasPrediction : state => state.hasPrediction
+  hasPrediction : state => state.hasPrediction,
+  userUid: state => {
+    if(state.userData !== null)
+      return state.userData.uid;
+    else
+      return 0;
+  }
 };
 
 /**
  * Register error in Firebase
  **/
 function registerError(context, error) {
-
-console.log(typeof(error))
   if(typeof error === 'object')
     error = JSON.stringify(error);
-  console.log(error)
 
   db.collection('errors').add({
     date: new Date(),
     error: error,
     context: context
+  });
+}
+
+/**
+ * Google/Facebook Auth using firebase
+ **/
+function firebaseAuth(commit, provider) {
+  return new Promise(function(resolve, reject) {
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      //console.log(result)
+
+      db.doc(`users/${result.user.uid}`).get()
+        .then((querySnapshot) => {
+          if(querySnapshot.data() != undefined)
+            commit('setHasPrediction', querySnapshot.data().hasPrediction);
+          else
+            commit('setHasPrediction', false);
+
+          commit('setUserData', result.user);
+          commit('setIsAuthenticated', true);
+
+          resolve('Success');
+        }).catch((error) => {
+          registerError("Writing user data", error.message);
+          reject(error);
+        });
+    }).catch((err) => {
+      registerError("loginWithGoogle()", err.message)
+      reject(err);
+    });
   });
 }
 
@@ -39,23 +72,7 @@ const actions = {
    */
   loginWithGoogle({ commit }) {
     const provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      //console.log(result)
-
-      db.doc(`users/${result.user.uid}`).get()
-        .then((querySnapshot) => {
-          commit('setHasPrediction', querySnapshot.data().hasPrediction);
-          commit('setUserData', result.user);
-          commit('setIsAuthenticated', true);
-        }).catch((error) => {
-          console.log(error)
-          registerError("Writing user data", error)
-        });
-    }).catch((err) => {
-      console.log(err)
-      registerError("loginWithGoogle()", err.message)
-    });
+    return firebaseAuth(commit, provider);
   },
 
   /**
@@ -63,23 +80,7 @@ const actions = {
    */
   loginWithFacebook({ commit }) {
     const provider = new firebase.auth.FacebookAuthProvider();
-
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      //console.log(result)
-
-      db.doc(`users/${result.user.uid}`).get()
-        .then((querySnapshot) => {
-          commit('setHasPrediction', querySnapshot.data().hasPrediction);
-          commit('setUserData', result.user);
-          commit('setIsAuthenticated', true);
-        }).catch((error) => {
-          console.log(error)
-          registerError("Writing user data", error)
-        });
-    }).catch((err) => {
-      console.log(err)
-      registerError("loginWithGoogle()", err.message)
-    });
+    return firebaseAuth(commit, provider);
   },
 
   userSignOut({ commit }) {
@@ -89,6 +90,7 @@ const actions = {
         .then(() => {
           commit('setUserData', null);
           commit('setIsAuthenticated', false);
+          commit('setHasPrediction', false);
           router.push('/');
         })
         .catch((error) => {
@@ -96,6 +98,7 @@ const actions = {
 
           commit('setUserData', null);
           commit('setIsAuthenticated', false);
+          commit('setHasPrediction', false);
           router.push('/');
         });
   },

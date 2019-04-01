@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/picker" class="button">{{text}}</router-link>
+    <div class="button">{{text}}</div>
 </template>
 
 <script>
@@ -32,8 +32,9 @@ $color: #FFB309;
   border-radius: 0.6em;
   transition: all 0.2s ease-in-out;
   position: relative;
+  cursor: pointer;
   overflow: hidden;
-  margin-top: 1em;
+  margin: 1em;
   font-family: "Cinzel";
   &:before {
     content: "";

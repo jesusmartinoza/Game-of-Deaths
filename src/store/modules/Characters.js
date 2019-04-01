@@ -82,7 +82,7 @@ const actions = {
       .get().then((querySnapshot) => {
         this.state.prediction = [];
 
-        for(var c of querySnapshot.data().prediction)
+        for(var c of querySnapshot.data().characters)
           commit('addToPrediction', c);
 
         commit('setKing', querySnapshot.data().king);

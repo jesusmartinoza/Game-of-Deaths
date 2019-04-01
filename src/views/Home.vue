@@ -7,12 +7,12 @@
       Game of Thrones!
     </h1>
 
-    <FancyButton id="fancy-button" text="Start" />
+    <FancyButton id="fancy-button" text="Start" @click.native="onStartClick"/>
 
     <div class="social-btns" v-if="!isAuthenticated">
         <p>Already have a prediction? <br> Login </p>
         <SocialLogin provider="Google" package="fab" icon="google" @click.native="loginWithGoogle" />
-        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" />
+        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" @click.native="loginWithFacebook" />
     </div>
     <div v-else>
       <SocialLogin provider="Logout" icon="sign-out-alt" package="fas" @click.native="logout" />
@@ -32,7 +32,7 @@
 <script>
 import FancyButton from '../components/FancyButton.vue'
 import SocialLogin from '../components/SocialLogin.vue'
-import router from '@/router';
+import router from '@/router'
 
 var routeChange = false;
 
@@ -49,22 +49,41 @@ export default {
     computed: {
       isAuthenticated() {
         var isAuthenticated = this.$store.getters.isAuthenticated;
-        console.log(isAuthenticated)
-
-        if(isAuthenticated)
-          router.push("/picker")
         return isAuthenticated;
       }
     },
 
     methods: {
+      handleLogin() {
+        var isAuthenticated = this.$store.getters.isAuthenticated;
+        var hasPrediction = this.$store.getters.hasPrediction;
+        var userId = this.$store.getters.userUid;
+
+        if(isAuthenticated && hasPrediction)
+          router.push(`/prediction?id=${userId}`);
+
+        if(!hasPrediction)
+          router.push("/picker");
+      },
+
       loginWithGoogle() {
-        console.log("login")
-        this.$store.dispatch('loginWithGoogle');
+        this.$store.dispatch('loginWithGoogle').then(() => {
+          this.handleLogin();
+        });
+      },
+
+      loginWithFacebook() {
+        this.$store.dispatch('loginWithFacebook').then(() => {
+          this.handleLogin();
+        });
       },
 
       logout() {
         this.$store.dispatch('userSignOut');
+      },
+
+      onStartClick() {
+        this.handleLogin();
       }
     }
 }
