@@ -14,7 +14,7 @@
 
     <div class="container">
       <h3>
-        They will die
+        I think they will die
       </h3>
       <div class="characters">
         <transition-group
@@ -42,7 +42,37 @@
 
       <div class="margin-top">
         <FancyButton text="Edit" v-if="showEditButton" @click.native="onEditClick" />
-        <FancyButton text="Share" @click.native="savePrediction" />
+        <h5>
+          Share
+        </h5>
+        <social-sharing :url="'https://gameofdeaths.com' + $route.fullPath"
+                      title="Game of Deaths"
+                      description="This is my prediction for season 8 of Game of Thrones"
+                      quote="This is my prediction for season 8 of Game of Thrones"
+                      hashtags="GameOfThrones,GameOfDeaths"
+                      twitter-user="game_of_deaths"
+                      inline-template>
+          <div>
+              <network network="facebook">
+                  <button class="share-btn fb">Facebook <font-awesome-icon :icon="['fab', `facebook-f`]"/></button>
+              </network>
+              <!-- <network network="line">
+                  <button class="share-btn line">Line <font-awesome-icon :icon="['fab', `line`]"/></button>
+              </network> -->
+              <network network="reddit">
+                  <button class="share-btn reddit">Reddit <font-awesome-icon :icon="['fab', `reddit`]"/></button>
+              </network>
+              <network network="twitter">
+                  <button class="share-btn twitter">Twitter <font-awesome-icon :icon="['fab', `twitter`]"/></button>
+              </network>
+              <network network="whatsapp">
+                  <button class="share-btn whatsapp">Whatsapp <font-awesome-icon :icon="['fab', `whatsapp`]"/></button>
+              </network>
+              <network network="telegram">
+                  <button class="share-btn telegram">Telegram <font-awesome-icon :icon="['fab', `telegram-plane`]"/></button>
+              </network>
+          </div>
+        </social-sharing>
       </div>
     </div>
   </div>
@@ -69,7 +99,11 @@ export default {
         var userId = this.$store.getters.userUid;
 
         return isAuthenticated && userId == this.$route.query.id;
-      }
+      },
+
+      myClasses() {
+        return ['share-btn', 'facebook']
+    }
     },
     components: {
       Character,
@@ -136,9 +170,57 @@ export default {
   margin-top: 2em;
 }
 
-h3 {
+h3, h5 {
   color: white;
   font-size: 24px;
 }
+
+h5 {
+  margin-top: 0.5em;
+  margin-bottom: 8px;
+}
+
 </style>
 
+<style>
+.share-btn {
+  background-color: 0;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  margin: 6px;
+  padding: 8px 12px;
+  transition: all .3s;
+}
+.share-btn:hover {
+  background: #FFB309;
+  color: #fff;
+  border-color: #FFB309;
+  box-shadow: 0px 0 5px 0 #FFB309;
+}
+
+.line {
+  border: 2px solid #00B401;
+  background-color: #00B401;
+}
+.fb {
+  border: 2px solid #2e4da7;
+  background-color: #2e4da7;
+}
+.reddit {
+  border: 2px solid #F84201;
+  background-color: #F84201;
+}
+.telegram {
+  border: 2px solid #228AE6;
+  background-color: #228AE6;
+}
+.twitter {
+  border: 2px solid #53A8E7;
+  background-color: #53A8E7;
+}
+.whatsapp {
+  border: 2px solid #40BF50;
+  background-color: #40BF50;
+}
+</style>
