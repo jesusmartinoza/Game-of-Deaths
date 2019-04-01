@@ -106,7 +106,6 @@ const actions = {
           date: data.date.toDate(),
           user: data.user
         }
-
         commit('setPredictionInfo', predictionInfo);
         commit('setKing', data.king);
 
@@ -159,6 +158,7 @@ const actions = {
    **/
   savePrediction({ commit, rootState }, prediction) {
     var userId = rootState.user.userData.uid;
+    console.log(rootState.user)
     var batch = db.batch();
 
     // Convert Character objects to pure JS objetcs
@@ -166,13 +166,18 @@ const actions = {
 
     // Update prediction
     var predictionRef = db.collection('predictions').doc(userId);
+    var profilePicture = rootState.user.userData.photoURL != undefined ? rootState.user.userData.photoURL : "";
+
+    if(rootState.user.userData.providerData[0].providerId == "facebook.com")
+      profilePicture = `https://graph.facebook.com/${rootState.user.userData.providerData[0].uid}/picture?height=300`;
+
     batch.set(predictionRef, {
       characters: prediction,
       date: new Date(),
       king: Object.assign({}, this.state.characters.king),
       user: {
         name: rootState.user.userData.displayName.split(' ')[0],
-        picture: rootState.user.userData.photoURL != undefined ? rootState.user.userData.photoURL : ""
+        picture: profilePicture
       }
     }, {merge: true});
 
