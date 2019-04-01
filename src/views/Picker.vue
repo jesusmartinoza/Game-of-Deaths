@@ -14,8 +14,11 @@
     </div>
 
     <div class="margin-top" v-else>
-      <font-awesome-icon :icon="['fas', 'exclamation-circle']"/>
-      It seems that you already have a prediction. <br> Clicking on save will update the date.
+
+      <div v-if="hasPrediction">
+        <font-awesome-icon :icon="['fas', 'exclamation-circle']"/>
+        It seems that you already have a prediction. <br> Clicking on save will update the date.
+      </div>
 
       <p>
         <FancyButton text="Save" @click.native="savePrediction" />
@@ -44,11 +47,10 @@ export default {
     FancyButton
   },
   computed: {
-    ...mapGetters(['all']),
+    ...mapGetters(['all', 'hasPrediction']),
 
     isAuthenticated() {
       var isAuthenticated = this.$store.getters.isAuthenticated;
-      console.log(isAuthenticated)
 
       return isAuthenticated;
     }

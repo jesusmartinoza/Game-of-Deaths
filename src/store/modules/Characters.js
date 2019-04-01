@@ -78,7 +78,7 @@ const actions = {
   * Read prediction from userId
   **/
   getPredictionByUser({ commit }, userId) {
-    db.doc(`people/${userId}`)
+    db.doc(`predictions/${userId}`)
       .get().then((querySnapshot) => {
         this.state.prediction = [];
 
@@ -110,7 +110,7 @@ const actions = {
     // When finish to mutate beetween characters
     // then read from Firebase the right king
     setTimeout(() => {
-      db.doc(`people/${userId}`)
+      db.doc(`predictions/${userId}`)
         .get().then((querySnapshot) => {
           commit('setKing', querySnapshot.data().king);
       });
@@ -123,16 +123,24 @@ const actions = {
    **/
   savePrediction({ commit, rootState }, prediction) {
     var userId = rootState.user.userData.uid;
-    var userRef = db.collection('people').doc(userId);
+    var batch = db.batch();
 
     // Convert Character objects to pure JS objetcs
     prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
 
-    userRef.set({
-        prediction: prediction
-      }, {merge:true}
-    ).then( result => {
+    // Update prediction
+    var predictionRef = db.collection('predictions').doc(userId);
+    batch.set(predictionRef, {characters: prediction, date: new Date()}, {merge: true});
+
+    // Update the user info
+    var userRef = db.collection("users").doc(userId);
+    batch.set(userRef, {hasPrediction: true}, {merge: true});
+
+    // Commit the batch
+    batch.commit().then(function () {
       router.push('/prediction?id=' + userId);
+    }).catch(function(error) {
+      console.log(error);
     });
   }
 };

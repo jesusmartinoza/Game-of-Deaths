@@ -28,11 +28,13 @@
         </transition-group>
       </div>
 
-      <h3>
-        And the King of Westeros will be...
-      </h3>
+      <div v-if="prediction.isKing != null">
+        <h3>
+          And the King of Westeros will be...
+        </h3>
         <Character id="king-of-westeros"
-          :character="king"/>
+            :character="king"/>
+      </div>
     </div>
   </div>
 </template>
@@ -60,7 +62,10 @@ export default {
       },
 
       enter: function (el, done) {
-          var delay = el.dataset.index * 300
+          var delay = el.dataset.index * 300;
+
+          delay = delay % 2500; // Max animation duration to 2.5s
+
           setTimeout(function () {
             Velocity(
               el,
