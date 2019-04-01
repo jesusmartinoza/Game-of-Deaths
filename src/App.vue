@@ -52,6 +52,7 @@ export default {
 }
 
 #logo {
+  cursor: pointer;
   margin-bottom: 2em;
   max-width: 400px;
   width: 85%;
