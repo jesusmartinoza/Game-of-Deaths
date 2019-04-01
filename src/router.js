@@ -29,6 +29,10 @@ export default new Router({
     {
       path: '/prediction',
       component: () => import('./views/Prediction.vue')
+    },
+    {
+      path: '/privacy-policy',
+      component: () => import('./views/PrivacyPolicy.vue')
     }
   ]
 })
