@@ -131,6 +131,8 @@ export default {
       },
 
       onEditClick() {
+        if(!this.showEditButton)
+          this.$ga.event('Prediction', 'startClick', 'start')
         router.push("/picker");
       }
     }

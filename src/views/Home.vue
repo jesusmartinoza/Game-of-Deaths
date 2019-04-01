@@ -67,12 +67,14 @@ export default {
       },
 
       loginWithGoogle() {
+        this.$ga.event('Home', 'login', 'google')
         this.$store.dispatch('loginWithGoogle').then(() => {
           this.handleLogin();
         });
       },
 
       loginWithFacebook() {
+        this.$ga.event('Home', 'login', 'facebook')
         this.$store.dispatch('loginWithFacebook').then(() => {
           this.handleLogin();
         });
@@ -83,6 +85,7 @@ export default {
       },
 
       onStartClick() {
+        this.$ga.event('Home', 'startClick', 'start')
         this.handleLogin();
       }
     }
