@@ -23,8 +23,10 @@
 </template>
 
 <script>
-
 export default {
+  created() {
+    this.$store.dispatch('onAuthStateChanged');
+  }
   /*props: {
     isInPrediction: false
   },

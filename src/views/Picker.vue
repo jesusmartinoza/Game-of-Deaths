@@ -47,7 +47,7 @@ export default {
     FancyButton
   },
   computed: {
-    ...mapGetters(['all', 'hasPrediction']),
+    ...mapGetters(['all', 'hasPrediction', 'getPredictionByUser']),
 
     isAuthenticated() {
       var isAuthenticated = this.$store.getters.isAuthenticated;

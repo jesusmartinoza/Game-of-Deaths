@@ -116,8 +116,9 @@ const actions = {
         for(var c of data.characters) {
           var searchItem = characters.find(dC => dC.id == c.id);
 
-          if(searchItem != undefined)
-            searchItem.isDead = true;
+          if(searchItem != undefined) {
+              searchItem.isDead = true;
+          }
         }
 
         commit('setCharacters', characters);
@@ -162,7 +163,7 @@ const actions = {
 
     // Convert Character objects to pure JS objetcs
     prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
-    
+
     // Update prediction
     var predictionRef = db.collection('predictions').doc(userId);
     batch.set(predictionRef, {

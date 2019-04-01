@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 import router from '@/router';
+import store from '../../store'
 
 var db = firebase.firestore();
 
@@ -22,23 +23,6 @@ const getters = {
   }
 };
 
-/** Login using Firebase **/
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user && state.hasPrediction == null) {
-    state.userData = user;
-    state.isAuthenticated = true;
-    db.doc(`users/${user.uid}`).get()
-      .then((querySnapshot) => {
-        if(querySnapshot.data() != undefined)
-          state.hasPrediction = querySnapshot.data().hasPrediction;
-        else
-          state.hasPrediction = false;
-      });
-  } else {
-    console.log("User not authenticated");
-  }
-});
-
 /**
  * Register error in Firebase
  **/
@@ -50,6 +34,29 @@ function registerError(context, error) {
     date: new Date(),
     error: error,
     context: context
+  });
+}
+
+function onAuthStateChanged(commit, rootState) {
+  return new Promise(function(resolve, reject) {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user && state.hasPrediction == null) {
+          commit('setUserData', user);
+          commit('setIsAuthenticated', true);
+          db.doc(`users/${user.uid}`).get()
+            .then((querySnapshot) => {
+              if(querySnapshot.data() != undefined)
+                commit('setHasPrediction', querySnapshot.data().hasPrediction);
+              else
+                commit('setHasPrediction', false);
+            });
+          store.dispatch('getPredictionByUser', user.uid);
+          //rootState.characters.getPredictionByUser(user.uid);
+        } else {
+          console.log("User not authenticated");
+        }
+        resolve('Auth success');
+      });
   });
 }
 
@@ -119,6 +126,11 @@ const actions = {
           router.push('/');
         });
   },
+
+  /** Login using Firebase **/
+  onAuthStateChanged({commit, rootState}) {
+    return onAuthStateChanged(commit, rootState);
+  }
 };
 
 const mutations = {
