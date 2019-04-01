@@ -1,11 +1,16 @@
 <template>
   <div>
-    <h2 class="glow-text">
-      Jesús's prediction for Season 8
-    </h2>
-    <p id="date" class="glow-text">
-      Prediction done on June 22, 2019
-    </p>
+    <div class="prediction-info">
+      <div v-if="predictionInfo.user">
+        <img class="user-picture" :src="predictionInfo.user.picture" alt="Profile picture">
+        <h2 class="glow-text">
+          {{predictionInfo.user.name}}'s prediction for Season 8
+        </h2>
+        <p id="date" class="glow-text">
+          Prediction done on <span>{{ predictionInfo.date | moment("dddd, MMMM Do YYYY") }}</span>
+        </p>
+      </div>
+    </div>
 
     <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/>
     <div class="container">
@@ -58,7 +63,7 @@ export default {
       this.getPredictionByUser(id);
     },
     computed: {
-      ...mapGetters(['all', 'king', 'prediction']),
+      ...mapGetters(['all', 'king', 'prediction', 'predictionInfo']),
 
       showEditButton() {
         var isAuthenticated = this.$store.getters.isAuthenticated;
@@ -115,6 +120,7 @@ export default {
 }
 
 .triangle-decorator {
+  margin-top: -100px; /* Picture height */
   width: 100%;
 }
 
@@ -129,6 +135,18 @@ export default {
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.prediction-info {
+  min-height: 200px;
+}
+
+.user-picture {
+  border-radius: 50%;
+  border: 4px solid #1F3345;
+  border-spacing: 4px;
+  border-collapse: separate;
+  height: 100px;
 }
 
 h3 {

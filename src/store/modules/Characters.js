@@ -61,7 +61,8 @@ const state = {
     new Character(39, "Viserion", "viserion.png"),
     new Character(40, "Night King", "night_king.png"),
   ],
-  prediction: []
+  prediction: [],
+  predictionInfo: {}
 };
 
 // Sort by name
@@ -70,7 +71,8 @@ state.characters = state.characters.sort((a, b) => a.name.localeCompare(b.name))
 const getters = {
   all: state => state.characters,
   king: state => state.king,
-  prediction: state => state.prediction
+  prediction: state => state.prediction,
+  predictionInfo: state => state.predictionInfo,
 };
 
 const actions = {
@@ -85,6 +87,11 @@ const actions = {
         for(var c of querySnapshot.data().characters)
           commit('addToPrediction', c);
 
+        var predictionInfo = {
+          date: querySnapshot.data().date.toDate(),
+          user: querySnapshot.data().user
+        }
+        commit('setPredictionInfo', predictionInfo);
         commit('setKing', querySnapshot.data().king);
     });
   },
@@ -95,27 +102,27 @@ const actions = {
   * This method is a tricky one 'cause it iterates over N characters.
   * The goal is to simulate a roulette and finally set the king of Westeros!
   **/
-  getKingByUser({ commit }, userId) {
-    var i = 0;
-    var limit = 15;
-
-    for(let c of state.characters) {
-      if(i < limit) {
-        setTimeout(() => {
-          commit('setKing', c);
-        }, 100 * ++i);
-      }
-    }
-
-    // When finish to mutate beetween characters
-    // then read from Firebase the right king
-    setTimeout(() => {
-      db.doc(`predictions/${userId}`)
-        .get().then((querySnapshot) => {
-          commit('setKing', querySnapshot.data().king);
-      });
-    }, 100 * limit);
-  },
+  // getKingByUser({ commit }, userId) {
+  //   var i = 0;
+  //   var limit = 15;
+  //
+  //   for(let c of state.characters) {
+  //     if(i < limit) {
+  //       setTimeout(() => {
+  //         commit('setKing', c);
+  //       }, 100 * ++i);
+  //     }
+  //   }
+  //
+  //   // When finish to mutate beetween characters
+  //   // then read from Firebase the right king
+  //   setTimeout(() => {
+  //     db.doc(`predictions/${userId}`)
+  //       .get().then((querySnapshot) => {
+  //         commit('setKing', querySnapshot.data().king);
+  //     });
+  //   }, 100 * limit);
+  // },
 
   /**
    * Receive an array of dead characters
@@ -130,7 +137,14 @@ const actions = {
 
     // Update prediction
     var predictionRef = db.collection('predictions').doc(userId);
-    batch.set(predictionRef, {characters: prediction, date: new Date()}, {merge: true});
+    batch.set(predictionRef, {
+      characters: prediction,
+      date: new Date(),
+      user: {
+        name: rootState.user.userData.displayName.split(' ')[0],
+        picture: rootState.user.userData.photoURL != undefined ? rootState.user.userData.photoURL : ""
+      }
+    }, {merge: true});
 
     // Update the user info
     var userRef = db.collection("users").doc(userId);
@@ -151,6 +165,7 @@ const mutations = {
       state.prediction.push(character)
   },
   setPrediction: (state, characters) => (state.prediction = characters),
+  setPredictionInfo: (state, info) => (state.predictionInfo = info),
   setKing: (state, character) => (state.king = character)
 };
 

@@ -7,7 +7,7 @@ var db = firebase.firestore();
 const state = {
   userData: null,
   isAuthenticated: false,
-  hasPrediction: false
+  hasPrediction: null
 };
 
 const getters = {
@@ -21,6 +21,23 @@ const getters = {
       return 0;
   }
 };
+
+/** Login using Firebase **/
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user && state.hasPrediction == null) {
+    state.userData = user;
+    state.isAuthenticated = true;
+    db.doc(`users/${user.uid}`).get()
+      .then((querySnapshot) => {
+        if(querySnapshot.data() != undefined)
+          state.hasPrediction = querySnapshot.data().hasPrediction;
+        else
+          state.hasPrediction = false;
+      });
+  } else {
+    console.log("User not authenticated");
+  }
+});
 
 /**
  * Register error in Firebase
