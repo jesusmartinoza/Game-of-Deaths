@@ -62,7 +62,9 @@ const state = {
     new Character(40, "Night King", "night_king.png"),
   ],
   prediction: [],
-  predictionInfo: {}
+  predictionInfo: {
+    user: {name: "", picture: "http://via.placeholder.com/150x150/fff?text=%20"}
+  }
 };
 
 // Sort by name
@@ -82,17 +84,31 @@ const actions = {
   getPredictionByUser({ commit }, userId) {
     db.doc(`predictions/${userId}`)
       .get().then((querySnapshot) => {
+        var data = querySnapshot.data();
         this.state.prediction = [];
 
-        for(var c of querySnapshot.data().characters)
+        for(var c of data.characters)
           commit('addToPrediction', c);
 
         var predictionInfo = {
-          date: querySnapshot.data().date.toDate(),
-          user: querySnapshot.data().user
+          date: data.date.toDate(),
+          user: data.user
         }
+
         commit('setPredictionInfo', predictionInfo);
-        commit('setKing', querySnapshot.data().king);
+        commit('setKing', data.king);
+
+        // Update characters info
+        var characters = this.state.characters.characters;
+
+        for(var c of data.characters) {
+          var searchItem = characters.find(dC => dC.id == c.id);
+
+          if(searchItem != undefined)
+            searchItem.isDead = true;
+        }
+
+        commit('setCharacters', characters);
     });
   },
 
@@ -166,7 +182,8 @@ const mutations = {
   },
   setPrediction: (state, characters) => (state.prediction = characters),
   setPredictionInfo: (state, info) => (state.predictionInfo = info),
-  setKing: (state, character) => (state.king = character)
+  setKing: (state, character) => (state.king = character),
+  setCharacters: (state, characters) => (state.characters = characters)
 };
 
 export default {

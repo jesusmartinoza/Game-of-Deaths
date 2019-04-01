@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="prediction-info">
-      <div v-if="predictionInfo.user">
+      <div>
         <img class="user-picture" :src="predictionInfo.user.picture" alt="Profile picture">
         <h2 class="glow-text">
           {{predictionInfo.user.name}}'s prediction for Season 8
@@ -12,7 +12,6 @@
       </div>
     </div>
 
-    <img class="triangle-decorator" src="../assets/triangle_decorator.png" alt=""/>
     <div class="container">
       <h3>
         They will die
@@ -108,20 +107,7 @@ export default {
 
 #date {
   font-size: 18px;
-  margin-bottom: 7em;
-}
-
-.container {
-  background-color: #fff;
-  min-height: 100vh;
-  margin-top: -5px; /* Super hacky x_x */
-  padding-bottom: 2em;
-  padding-top: 2em;
-}
-
-.triangle-decorator {
-  margin-top: -100px; /* Picture height */
-  width: 100%;
+  margin-bottom: 4em;
 }
 
 .list-item {
@@ -147,10 +133,11 @@ export default {
   border-spacing: 4px;
   border-collapse: separate;
   height: 100px;
+  margin-top: 2em;
 }
 
 h3 {
-  color: black;
+  color: white;
   font-size: 24px;
 }
 </style>
