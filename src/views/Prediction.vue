@@ -32,16 +32,19 @@
         </transition-group>
       </div>
 
-      <div v-if="prediction.isKing != null">
+      <div v-if="king != null">
         <h3>
           And the King of Westeros will be...
         </h3>
-        <Character id="king-of-westeros"
-            :character="king"/>
+        <Character id="king-of-westeros" class="margin-top"
+            :character="king"
+            :disabled="true"/>
       </div>
 
       <div class="margin-top">
         <FancyButton text="Edit" v-if="showEditButton" @click.native="onEditClick" />
+        <FancyButton text="Make prediction" v-else @click.native="onEditClick" />
+
         <h5>
           Share
         </h5>

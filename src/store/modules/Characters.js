@@ -78,6 +78,18 @@ const getters = {
 };
 
 const actions = {
+  changeKing({ commit}, king) {
+    var characters = this.state.characters.characters;
+
+    for(var c of characters) {
+      c.isKing = c.id == king.id;
+
+      if(c.isKing)
+        commit('setKing', c);
+    }
+    commit('setCharacters', characters);
+  },
+
   /**
   * Read prediction from userId
   **/
@@ -150,12 +162,13 @@ const actions = {
 
     // Convert Character objects to pure JS objetcs
     prediction = prediction.map((obj)=> {return Object.assign({}, obj)});
-
+    
     // Update prediction
     var predictionRef = db.collection('predictions').doc(userId);
     batch.set(predictionRef, {
       characters: prediction,
       date: new Date(),
+      king: Object.assign({}, this.state.characters.king),
       user: {
         name: rootState.user.userData.displayName.split(' ')[0],
         picture: rootState.user.userData.photoURL != undefined ? rootState.user.userData.photoURL : ""

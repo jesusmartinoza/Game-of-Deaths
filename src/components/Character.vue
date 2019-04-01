@@ -1,10 +1,16 @@
 <template>
-  <div class="character" v-on:click="changeStatus">
-    <div id="crown" :class="{'scaleUp': character.isKing}"><span></span></div>
-    <span id="dizzy" :class="{'scaleUp': character.isDead && !character.isKing}">😵<span></span></span>
+  <div class="character">
+    <div id="crown" :class="{'scaleUp': character.isKing && disabled}"><span></span></div>
+    <span id="dizzy" :class="{'scaleUp': character.isDead && !character.isKing && disabled}">😵</span>
     <img :src="require('../assets/characters/' + character.picture)" alt="Game of Deaths - ${character.name}">
     <p class="triangle-bottom-left"></p>
     <p>{{character.name}}</p>
+    <div id="options" v-if="!disabled">
+      <img v-on:click="changeKingStatus" src="../assets/emoji_crown_color.png" alt="" v-show="character.isKing">
+      <img v-on:click="changeKingStatus" src="../assets/emoji_crown.png" alt="" v-if="!character.isKing">
+      <img v-on:click="changeDeadStatus" src="../assets/emoji_dead_color.png" alt="" v-show="character.isDead">
+      <img v-on:click="changeDeadStatus" src="../assets/emoji_dead.png" alt="" v-if="!character.isDead">
+    </div>
   </div>
 </template>
 
@@ -16,9 +22,14 @@ export default {
   },
   props: ['character', 'disabled'],
   methods : {
-    changeStatus() {
+    changeDeadStatus() {
       if(!this.disabled)
         this.character.isDead = !this.character.isDead;
+    },
+
+    changeKingStatus() {
+      if(!this.disabled)
+        this.$store.dispatch('changeKing', this.character);
     }
   }
 }
@@ -52,10 +63,6 @@ export default {
   width: 155px;
 }
 
-.character:hover {
-  opacity: 0.8;
-}
-
 .character img {
   border-radius: 13px 3px 0 0;
   height: 155px;
@@ -67,6 +74,18 @@ export default {
   margin: 0.1em 0.25em 0.5em 0.25em;
 }
 
+#options img {
+  border-radius: 0;
+  height: 30px;
+  margin: 0 8px 8px 8px;
+  transition: 300ms;
+  width: 30px;
+}
+
+#options .opacity100 {
+  opacity: 1;
+}
+
 .triangle-bottom-left {
   width: 0;
   height: 0;
@@ -74,7 +93,7 @@ export default {
   border-width: 0 0 12px 155px;
   margin: 0 !important;
   position: absolute;
-  bottom: 30px;
+  bottom: 70px;
   border-color: transparent transparent #203345 transparent;
 }
 
