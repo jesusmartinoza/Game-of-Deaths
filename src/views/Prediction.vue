@@ -58,6 +58,7 @@ export default {
       beforeEnter: function (el) {
         el.style.opacity = 0
       },
+
       enter: function (el, done) {
           var delay = el.dataset.index * 300
           setTimeout(function () {
