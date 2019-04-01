@@ -3,8 +3,10 @@
     <div id="crown" :class="{'scaleUp': character.isKing && disabled}"><span></span></div>
     <span id="dizzy" :class="{'scaleUp': character.isDead && !character.isKing && disabled}">😵</span>
     <img :src="require('../assets/characters/' + character.picture)" alt="Game of Deaths - ${character.name}">
-    <p class="triangle-bottom-left"></p>
-    <p>{{character.name}}</p>
+    <div class="name">
+      <p class="triangle-bottom-left"></p>
+      {{character.name}}
+    </div>
     <div id="options" v-if="!disabled">
       <img v-on:click="changeKingStatus" src="../assets/emoji_crown_color.png" alt="" v-show="character.isKing">
       <img v-on:click="changeKingStatus" src="../assets/emoji_crown.png" alt="" v-if="!character.isKing">
@@ -45,6 +47,18 @@ export default {
   transform: rotateZ(10deg) scale(0);
 }
 
+#options img {
+  border-radius: 0;
+  height: 30px;
+  margin: 0 8px 8px 8px;
+  transition: 300ms;
+  width: 30px;
+}
+
+#options .opacity100 {
+  opacity: 1;
+}
+
 .character {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#364154+0,0a2535+100 */
   background: #1F3345; /* Old browsers */
@@ -69,21 +83,13 @@ export default {
   width: 100%;
 }
 
-.character p {
+.character .name {
   font-size: 18px;
-  margin: 0.1em 0.25em 0.5em 0.25em;
+  padding: 0.5em 0;
 }
 
-#options img {
-  border-radius: 0;
-  height: 30px;
-  margin: 0 8px 8px 8px;
-  transition: 300ms;
-  width: 30px;
-}
-
-#options .opacity100 {
-  opacity: 1;
+.name {
+  position: relative;
 }
 
 .triangle-bottom-left {
@@ -93,7 +99,7 @@ export default {
   border-width: 0 0 12px 155px;
   margin: 0 !important;
   position: absolute;
-  bottom: 70px;
+  top: -12px;
   border-color: transparent transparent #203345 transparent;
 }
 
@@ -128,7 +134,7 @@ export default {
 	transition-property: all;
 
 	height: 44px;
-	width: 55px;
+	width: 34px;
 }
 
 .scaleUp {
