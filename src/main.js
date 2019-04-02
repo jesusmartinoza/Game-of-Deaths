@@ -8,6 +8,7 @@ import { faSignOutAlt, faCheck, faExclamationCircle } from '@fortawesome/free-so
 import { faGoogle, faFacebookF, faWhatsapp, faReddit, faTwitter, faLine, faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueAnalytics from 'vue-analytics'
+import Meta from 'vue-meta'
 
 Vue.use(VueAnalytics, {
   id: 'UA-55847702-7',
@@ -33,6 +34,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(require('vue-moment'));
 Vue.use(SocialSharing);
+Vue.use(Meta);
 
 Vue.config.productionTip = false
 

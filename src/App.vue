@@ -26,15 +26,23 @@
 export default {
   created() {
     this.$store.dispatch('onAuthStateChanged');
-  }
-  /*props: {
-    isInPrediction: false
   },
-  watch:{
-    $route (to, from){
-        this.isInPrediction = to.name == "prediction";
-    }
-  }*/
+  metaInfo: {
+    // Children can override the title.
+    title: 'Game of Deaths | Season 8',
+    // Define meta tags here.
+    meta: [
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {name: 'description', content: 'Who will die in season 8 of Game of Thrones?'},
+      {property: "og:image", content:"https://gameofdeaths.com/who_will_die_in_game_of_thrones.png"},
+      {property: "og:image:type", content:"image/png"},
+      {property: "og:image:width", content:"1220"},
+      {property: "og:image:height", content:"884"},
+      {property: "og:type", content:"website"},
+      {property:"og:title", content:"Game of Deaths | Season 8"},
+      {property:"og:description", content:" Who will die in season 8 of Game of Thrones?"}
+    ]
+  }
 }
 </script>
 
