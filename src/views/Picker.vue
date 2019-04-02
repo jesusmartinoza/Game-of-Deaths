@@ -1,5 +1,8 @@
 <template>
   <div class="picker">
+    <loading :active.sync="isLoading"
+    :can-cancel="false"
+    :is-full-page="true"></loading>
     <h2 class="glow-text">Who will die in season 8?</h2>
     <h3>Guess and bet with your friends about the final season of Game Of Thrones</h3>
     <div class="characters margin-bottom">
@@ -36,15 +39,28 @@ import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
 import firebase from 'firebase'
 import 'firebase/firestore'
+// Import component
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 var db = firebase.firestore();
 
 export default {
   name: "Picker",
+  data() {
+    return {
+      isLoading: false
+    }
+  },
+  created() {
+    this.$store.dispatch('getPredictionByUser', -1);
+  },
   components: {
     SocialLogin,
     Character,
-    FancyButton
+    FancyButton,
+    Loading
   },
   computed: {
     ...mapGetters(['all', 'hasPrediction', 'getPredictionByUser']),
@@ -64,8 +80,11 @@ export default {
      * Get all characters marked as dead and send it to Firebase
      */
     savePrediction() {
+      this.isLoading = true;
       var prediction = this.all.filter( c => c.isDead);
-      this.$store.dispatch('savePrediction', prediction);
+      this.$store.dispatch('savePrediction', prediction).then(() => {
+        this.isLoading = false;
+      }).catch(() => this.isLoading = false);
     }
   }
 }

@@ -74,7 +74,7 @@ const getters = {
   all: state => state.characters,
   king: state => state.king,
   prediction: state => state.prediction,
-  predictionInfo: state => state.predictionInfo,
+  predictionInfo: state => state.predictionInfo
 };
 
 const actions = {
@@ -94,34 +94,44 @@ const actions = {
   * Read prediction from userId
   **/
   getPredictionByUser({ commit }, userId) {
-    db.doc(`predictions/${userId}`)
-      .get().then((querySnapshot) => {
-        var data = querySnapshot.data();
-        this.state.prediction = [];
+    if(userId == -1) {
+      var characters = this.state.characters.characters;
 
-        for(var c of data.characters)
-          commit('addToPrediction', c);
+      for(var c of characters) {
+        c.isKing = false;
+        c.isDead = false;
+      }
+      commit('setCharacters', characters);
+    } else {
+      db.doc(`predictions/${userId}`)
+        .get().then((querySnapshot) => {
+          var data = querySnapshot.data();
+          this.state.prediction = [];
 
-        var predictionInfo = {
-          date: data.date.toDate(),
-          user: data.user
-        }
-        commit('setPredictionInfo', predictionInfo);
-        commit('setKing', data.king);
+          for(var c of data.characters)
+            commit('addToPrediction', c);
 
-        // Update characters info
-        var characters = this.state.characters.characters;
-
-        for(var c of data.characters) {
-          var searchItem = characters.find(dC => dC.id == c.id);
-
-          if(searchItem != undefined) {
-              searchItem.isDead = true;
+          var predictionInfo = {
+            date: data.date.toDate(),
+            user: data.user
           }
-        }
+          commit('setPredictionInfo', predictionInfo);
+          commit('setKing', data.king);
 
-        commit('setCharacters', characters);
-    });
+          // Update characters info
+          var characters = this.state.characters.characters;
+
+          for(var c of data.characters) {
+            var searchItem = characters.find(dC => dC.id == c.id);
+
+            if(searchItem != undefined) {
+                searchItem.isDead = true;
+            }
+          }
+
+          commit('setCharacters', characters);
+      });
+    }
   },
 
   /**
@@ -158,7 +168,7 @@ const actions = {
    **/
   savePrediction({ commit, rootState }, prediction) {
     var userId = rootState.user.userData.uid;
-    console.log(rootState.user)
+    //console.log(rootState.user)
     var batch = db.batch();
 
     // Convert Character objects to pure JS objetcs
