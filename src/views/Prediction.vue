@@ -53,6 +53,7 @@
                       description="This is my prediction for season 8 of Game of Thrones"
                       quote="This is my prediction for season 8 of Game of Thrones"
                       hashtags="GameOfThrones,GameOfDeaths"
+                      media="https://gameofdeaths.com/daenerys_king_of_westeros.jpg"
                       twitter-user="game_of_deaths"
                       inline-template>
           <div>
