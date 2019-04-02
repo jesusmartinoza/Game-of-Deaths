@@ -32,15 +32,19 @@ export default {
     title: 'Game of Deaths | Season 8',
     // Define meta tags here.
     meta: [
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {name: 'description', content: 'Who will die in season 8 of Game of Thrones?'},
-      {property: "og:image", content:"https://gameofdeaths.com/who_will_die_in_game_of_thrones.png"},
-      {property: "og:image:type", content:"image/png"},
-      {property: "og:image:width", content:"1220"},
-      {property: "og:image:height", content:"884"},
-      {property: "og:type", content:"website"},
-      {property:"og:title", content:"Game of Deaths | Season 8"},
-      {property:"og:description", content:" Who will die in season 8 of Game of Thrones?"}
+      {vmid: "og:image", property: "og:image", content:"https://gameofdeaths.com/who_will_die_in_game_of_thrones.png"},
+      {vmid: "og:image:type", property: "og:image:type", content:"image/png"},
+      {vmid: "og:image:width", property: "og:image:width", content:"789"},
+      {vmid: "og:image:height", property: "og:image:height", content:"454"},
+      {vmid: "og:type", property: "og:type", content:"website"},
+      {vmid: "og:title", property: "og:title", content:"Game of Deaths | Season 8"},
+      {vmid: "og:description", property: "og:description", content:"Who will die in season 8 of Game of Thrones?"},
+      {vmid: "twitter:card", name: "twitter:card", content:"summary"},
+      {vmid: "twitter:site", name: "twitter:site", content:"@game_of_deaths"},
+      {vmid: "twitter:creator", name: "twitter:creator", content:"@game_of_deaths"},
+      {vmid: "twitter:title", name: "twitter:title", content:"Game of Deaths for Season 8 of GoT"},
+      {vmid: "twitter:description", name: "twitter:description", content:"Who will die in season 8 of Game of Thrones?"},
+      {vmid: "twitter:image", name: "twitter:image", content:"https://gameofdeaths.com/who_will_die_in_game_of_thrones.png"},
     ]
   }
 }
