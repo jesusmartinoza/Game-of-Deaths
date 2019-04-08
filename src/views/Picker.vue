@@ -39,10 +39,8 @@ import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
 import firebase from 'firebase'
 import 'firebase/firestore'
-// Import component
-import Loading from 'vue-loading-overlay';
-// Import stylesheet
-import 'vue-loading-overlay/dist/vue-loading.css';
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 var db = firebase.firestore();
 

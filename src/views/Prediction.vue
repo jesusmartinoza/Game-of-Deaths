@@ -1,6 +1,11 @@
 <template>
   <div>
     <div class="prediction-info">
+      <loading :active.sync="prediction.length == 0"
+      :can-cancel="false"
+      :color="loaderColor"
+      :background-color="loaderBk"
+      :is-full-page="true"></loading>
       <div>
         <img class="user-picture" :src="predictionInfo.user.picture" alt="Profile picture">
         <h2 class="glow-text">
@@ -88,9 +93,18 @@ import SocialLogin from '../components/SocialLogin.vue'
 import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
 import router from '@/router'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
     name : 'PredictionScreen',
+    data() {
+      return {
+        isLoading: false,
+        loaderBk: "#000000",
+        loaderColor: "#FFB309"
+      }
+    },
     created() {
       var id = this.$route.query.id;
       this.getPredictionByUser(id);
@@ -104,14 +118,11 @@ export default {
 
         return isAuthenticated && userId == this.$route.query.id;
       },
-
-      myClasses() {
-        return ['share-btn', 'facebook']
-    }
     },
     components: {
       Character,
       FancyButton,
+      Loading,
       SocialLogin
     },
     methods: {
@@ -150,19 +161,6 @@ export default {
   margin-bottom: 4em;
 }
 
-.list-item {
-  display: inline-block;
-}
-
-.list-enter-active, .list-leave-active {
-  transition: all 1s;
-}
-
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
 .prediction-info {
   min-height: 200px;
 }
@@ -189,6 +187,19 @@ h5 {
 </style>
 
 <style>
+.list-item {
+  display: inline-block !important;
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 .share-btn {
   background-color: 0;
   color: #fff;

@@ -1,8 +1,15 @@
 <template>
   <div id="app">
-    <router-link to="/">
-      <img id="logo" src="./assets/game_of_deaths.png" alt="Game of Deaths">
-    </router-link>
+
+    <div class="header">
+      <router-link to="/">
+        <img id="logo" src="./assets/game_of_deaths.png" alt="Game of Deaths">
+      </router-link>
+
+      <router-link to="/stats">
+        <button id="stats">Worlwide</button>
+      </router-link>
+    </div>
 
     <transition appear
       name="fade"
@@ -23,10 +30,17 @@
 </template>
 
 <script>
+import FancyButton from './components/FancyButton.vue'
+
 export default {
   created() {
     this.$store.dispatch('onAuthStateChanged');
   },
+
+  components: {
+    FancyButton
+  },
+
   metaInfo: {
     // Children can override the title.
     title: 'Game of Deaths | Season 8',
@@ -50,6 +64,39 @@ export default {
 }
 </script>
 
+<style scoped>
+#stats {
+  background: #0000;
+  border-color: #FFB309;
+  box-shadow: 0px 0 5px 0 #FFB309aa;
+  color: #FFB309;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  height: 40px;
+  padding: 8px 12px;
+  position: absolute;
+  right: 1em;
+  transition: all .3s;
+}
+
+#stats:hover {
+  background: #FFB309;
+  color: #000;
+}
+
+.header {
+  text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  #stats {
+    display: block;
+    margin: auto;
+    position: relative !important;
+  }
+}
+</style>
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Cinzel|Crimson+Text');
 
@@ -67,6 +114,7 @@ export default {
 
 #logo {
   cursor: pointer;
+  flex-grow: 8;
   margin-bottom: 2em;
   max-width: 400px;
   width: 85%;

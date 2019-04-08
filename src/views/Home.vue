@@ -87,7 +87,7 @@ export default {
       onStartClick() {
         this.$ga.event('Home', 'startClick', 'start')
         this.handleLogin();
-      }
+      },
     }
 }
 </script>
@@ -98,8 +98,8 @@ export default {
 }
 
 h1 {
-  font-size: 1.3rem;
-  margin-top: 15vh;
+  font-size: 1.5rem;
+  margin-top: 8vh;
 }
 
 footer {
