@@ -51,7 +51,7 @@ function onAuthStateChanged(commit, rootState) {
                 commit('setHasPrediction', false);
             });
           store.dispatch('getPredictionByUser', user.uid);
-          //rootState.characters.getPredictionByUser(user.uid);
+          store.dispatch('getPredictionByUser', "world");
         } else {
           console.log("User not authenticated");
         }

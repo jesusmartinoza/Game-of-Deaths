@@ -48,13 +48,13 @@ const state = {
     new Character(26, "Daario Naharis", "daario_naharis.png"),
     new Character(27, "Jaqen H’ghar", "jaqen_h’ghar.png"),
     new Character(28, "Beric Dondarrion", "beric_dondarrion.png"),
-    new Character(29, "Meera Reed", "meera_reed.png"),
+    //new Character(29, "Meera Reed", "meera_reed.png"),
     new Character(30, "Podrick Payne", "podrick_payne.png"),
     new Character(31, "Gilly", "gilly.png"),
     new Character(32, "Lyanna Mormont", "lyanna_mormont.png"),
     //new Character(33, "Ellaria Sand", "ellaria_sand.png"),
     new Character(34, "Qyburn", "qyburn.png"),
-    new Character(35, "Hot Pie", "hot_pie.png"),
+    //new Character(35, "Hot Pie", "hot_pie.png"),
     new Character(36, "Eddison Tollett", "eddison_tollett.png"),
     new Character(37, "Drogon", "drogon.png"),
     new Character(38, "Rhaegal", "rhaegal.png"),
@@ -62,6 +62,8 @@ const state = {
     new Character(40, "Night King", "night_king.png"),
   ],
   prediction: [],
+  worldPrediction: [],
+  worldCounter: 0,
   predictionInfo: {
     user: {name: "", picture: "http://via.placeholder.com/150x150/fff?text=%20"}
   }
@@ -74,7 +76,9 @@ const getters = {
   all: state => state.characters,
   king: state => state.king,
   prediction: state => state.prediction,
-  predictionInfo: state => state.predictionInfo
+  worldPrediction: state => state.worldPrediction,
+  predictionInfo: state => state.predictionInfo,
+  worldCounter: state => state.worldCounter,
 };
 
 const actions = {
@@ -106,61 +110,38 @@ const actions = {
       db.doc(`predictions/${userId}`)
         .get().then((querySnapshot) => {
           var data = querySnapshot.data();
+          var predictionInfo;
           this.state.prediction = [];
 
-          for(var c of data.characters)
-            commit('addToPrediction', c);
+          if(userId == "world") {
+            data.characters.sort((a,b) => a.deadCounter >= b.deadCounter ? -1 : 1);
+            commit("setWorldCounter", data.counter)
+            commit("setWorldPrediction", data.characters);
+          } else {
+            predictionInfo = {
+              date: data.date.toDate(),
+              user: data.user
+            };
+            commit("setPrediction", data.characters)
+            commit('setPredictionInfo', predictionInfo);
+            commit('setKing', data.king);
 
-          var predictionInfo = {
-            date: data.date.toDate(),
-            user: data.user
-          }
-          commit('setPredictionInfo', predictionInfo);
-          commit('setKing', data.king);
+            // Update characters info
+            var characters = this.state.characters.characters;
 
-          // Update characters info
-          var characters = this.state.characters.characters;
+            for(var c of data.characters) {
+              var searchItem = characters.find(dC => dC.id == c.id);
 
-          for(var c of data.characters) {
-            var searchItem = characters.find(dC => dC.id == c.id);
-
-            if(searchItem != undefined) {
-                searchItem.isDead = true;
+              if(searchItem != undefined) {
+                  searchItem.isDead = true;
+              }
             }
-          }
 
-          commit('setCharacters', characters);
-      });
+            commit('setCharacters', characters);
+          }
+        }).catch((e) => console.log(e));
     }
   },
-
-  /**
-  * Get king selection by userId
-  *
-  * This method is a tricky one 'cause it iterates over N characters.
-  * The goal is to simulate a roulette and finally set the king of Westeros!
-  **/
-  // getKingByUser({ commit }, userId) {
-  //   var i = 0;
-  //   var limit = 15;
-  //
-  //   for(let c of state.characters) {
-  //     if(i < limit) {
-  //       setTimeout(() => {
-  //         commit('setKing', c);
-  //       }, 100 * ++i);
-  //     }
-  //   }
-  //
-  //   // When finish to mutate beetween characters
-  //   // then read from Firebase the right king
-  //   setTimeout(() => {
-  //     db.doc(`predictions/${userId}`)
-  //       .get().then((querySnapshot) => {
-  //         commit('setKing', querySnapshot.data().king);
-  //     });
-  //   }, 100 * limit);
-  // },
 
   /**
    * Receive an array of dead characters
@@ -210,9 +191,11 @@ const mutations = {
       state.prediction.push(character)
   },
   setPrediction: (state, characters) => (state.prediction = characters),
+  setWorldPrediction: (state, characters) => (state.worldPrediction = characters),
   setPredictionInfo: (state, info) => (state.predictionInfo = info),
   setKing: (state, character) => (state.king = character),
-  setCharacters: (state, characters) => (state.characters = characters)
+  setCharacters: (state, characters) => (state.characters = characters),
+  setWorldCounter: (state, counter) => (state.worldCounter = counter)
 };
 
 export default {

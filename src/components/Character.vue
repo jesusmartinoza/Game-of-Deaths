@@ -13,6 +13,10 @@
       <img v-on:click="changeDeadStatus" src="../assets/emoji_dead_color.png" alt="" v-show="character.isDead">
       <img v-on:click="changeDeadStatus" src="../assets/emoji_dead.png" alt="" v-if="!character.isDead">
     </div>
+
+    <div class="dead-counter" v-if="character.deadCounter != null">
+      <span>😵 {{character.deadCounter}} votes</span>
+    </div>
   </div>
 </template>
 
@@ -59,16 +63,19 @@ export default {
   opacity: 1;
 }
 
+.dead-counter {
+  font-weight: bold;
+  height: 14px;
+  line-height: 14px;
+  padding: 0.5em 0;
+}
+
 .character {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#364154+0,0a2535+100 */
-  background: #1F3345; /* Old browsers */
-  /* background: -moz-linear-gradient(45deg, #364154 0%, #0a2535 100%);
-  background: -webkit-linear-gradient(45deg, #364154 0%,#0a2535 100%);
-  background: linear-gradient(45deg, #364154 0%,#0a2535 100%); */
+  background: #1F3345;
   border-radius: 13px 3px 13px 3px;
   box-shadow: 0px 0px 8px #000a;
   cursor: pointer;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#364154', endColorstr='#0a2535',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   margin: 0.5em;
@@ -99,7 +106,7 @@ export default {
   border-width: 0 0 12px 155px;
   margin: 0 !important;
   position: absolute;
-  top: -12px;
+  top: -15px;
   border-color: transparent transparent #203345 transparent;
 }
 

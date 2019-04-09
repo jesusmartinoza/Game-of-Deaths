@@ -4,21 +4,23 @@
     :can-cancel="false"
     :is-full-page="true"></loading>
     <h2 class="glow-text">The world thinks the following characters will die</h2>
-    <h3>Total users: 800</h3>
-    <div class="characters">
-      <transition-group
-        name="list"
-        v-on:before-enter="beforeEnter"
-        v-on:enter="enter">
-          <Character v-for="(character, index) in prediction"
-            class="list-item"
-            :key="character.id"
-            :character="character"
-            :disabled="true"
-            v-if="character.isDead"
-            v-bind:data-index="index"
-          />
-      </transition-group>
+    <h3>Total users: {{worldCounter}}</h3>
+
+    <div class="container">
+      <div class="characters">
+        <transition-group
+          name="list"
+          v-on:before-enter="beforeEnter"
+          v-on:enter="enter">
+            <Character v-for="(character, index) in worldPrediction"
+              class="list-item"
+              :key="character.id"
+              :character="character"
+              :disabled="true"
+              v-bind:data-index="index"
+            />
+        </transition-group>
+      </div>
     </div>
 
     <div v-if="king != null">
@@ -57,7 +59,7 @@ export default {
     }
   },
   created() {
-    this.getPredictionByUser(id);
+    this.getPredictionByUser("world");
   },
   components: {
     SocialLogin,
@@ -66,7 +68,7 @@ export default {
     Loading
   },
   computed: {
-    ...mapGetters(['all', 'king', 'prediction', 'predictionInfo']),
+    ...mapGetters(['all', 'king', 'worldPrediction', 'worldCounter']),
 
     isAuthenticated() {
       var isAuthenticated = this.$store.getters.isAuthenticated;

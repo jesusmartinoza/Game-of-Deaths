@@ -43,7 +43,7 @@ export default {
 
   metaInfo: {
     // Children can override the title.
-    title: 'Game of Deaths | Season 8',
+    title: 'Game of Deaths | GoT Final Season',
     // Define meta tags here.
     meta: [
       {vmid: "og:image", property: "og:image", content:"https://gameofdeaths.com/who_will_die_in_game_of_thrones.png"},
@@ -179,6 +179,20 @@ body, .view {
 html {
   min-height: 100%;
   position: relative;
+}
+
+#king-of-westeros {
+  margin: auto;
+  margin-top: 1.5em;
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* Background animation
