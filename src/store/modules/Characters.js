@@ -17,6 +17,35 @@ class Character {
 
 var db = firebase.firestore();
 
+/*db.collection(`predictions`)
+  .get().then((querySnapshot) => {
+    var docs = querySnapshot.docs;
+    var worldStats = [];
+    console.log(docs)
+
+    db.doc(`predictions/world`).get().then((queryDocSnap) => {
+      worldStats = queryDocSnap.data().characters;
+
+      console.log(worldStats)
+      for(var d of docs) {
+        if(d.id != "world") {
+          for(var dC of d.data().characters) {
+            var c = worldStats.find(dC2 => dC2.id == dC.id);
+
+            //console.log(c)
+            if(c != undefined) {
+
+                c["deadCounter"]++;
+            }
+          }
+        }
+      }
+      db.collection("predictions").doc("world")
+        .update({characters: worldStats});
+      console.log(worldStats)
+    });
+  });*/
+
 // Hard coded characters to save up firebase read transactions
 const state = {
   king : new Character(1, "Jon Snow", "jon_snow.png"),
