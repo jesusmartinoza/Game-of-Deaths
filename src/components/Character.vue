@@ -14,8 +14,12 @@
       <img v-on:click="changeDeadStatus" src="../assets/emoji_dead.png" alt="" v-if="!character.isDead">
     </div>
 
-    <div class="dead-counter" v-if="character.deadCounter != null">
+    <div class="dead-counter" v-if="character.deadCounter != null && !character.isKing">
       <span>😵 {{character.deadCounter}} votes</span>
+    </div>
+
+    <div class="dead-counter" v-if="character.kingCounter != null && character.isKing">
+      <span>👑 {{character.kingCounter}} votes</span>
     </div>
   </div>
 </template>

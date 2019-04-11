@@ -17,7 +17,7 @@ exports.newPrediction = functions.firestore.document('predictions/{userId}')
         worldPrediction["counter"]++;
 
         for(var c of prediction.characters) {
-          var searchItem = worldPrediction.find(wC => wC.id == c.id);
+          var searchItem = worldPrediction.characters.find(wC => wC.id == c.id);
 
           if(c.isDead)
             searchItem["deadCounter"]++;

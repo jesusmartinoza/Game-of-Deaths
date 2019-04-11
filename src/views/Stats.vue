@@ -23,17 +23,15 @@
       </div>
     </div>
 
-    <div v-if="king != null">
-      <h3>
-        And the King of Westeros will be...
-      </h3>
-      <Character id="king-of-westeros" class="margin-top"
-          :character="king"
-          :disabled="true"/>
-    </div>
-
-    <FancyButton text="Make prediction" v-else @click.native="onEditClick" />
-    <!-- <h2>Who will gonna be the king of Westeros?</h2> -->
+    <h3>
+      And the King of Westeros will be...
+    </h3>
+    <Character id="king-of-westeros" class="margin-top"
+        :character="worldKing"
+        :disabled="true"/>
+    <p>
+      <FancyButton text="Make prediction" @click.native="makePrediction" />
+    </p>
   </div>
 </template>
 
@@ -68,7 +66,7 @@ export default {
     Loading
   },
   computed: {
-    ...mapGetters(['all', 'king', 'worldPrediction', 'worldCounter']),
+    ...mapGetters(['all', 'worldPrediction', 'worldCounter', 'worldKing']),
 
     isAuthenticated() {
       var isAuthenticated = this.$store.getters.isAuthenticated;
@@ -92,6 +90,11 @@ export default {
         Velocity(el, {opacity: 1}, {complete: done});
       }, delay);
     },
+
+    makePrediction() {
+      //this.$ga.event('WorldStats', 'startClick', 'start')
+      router.push("/picker");
+    }
   }
 }
 </script>

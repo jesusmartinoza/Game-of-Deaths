@@ -6,12 +6,13 @@ import router from '@/router'
  * Class to represent a Game Of Thrones Character
  */
 class Character {
-  constructor(id, name, picture, isDead = false, isKing = false) {
+  constructor(id, name, picture, isDead = false, isKing = false, kingCounter) {
     this.id = id;
     this.name = name;
     this.picture = picture;
     this.isDead = isDead;
     this.isKing = isKing;
+    this.kingCounter = kingCounter;
   }
 }
 
@@ -93,6 +94,7 @@ const state = {
   prediction: [],
   worldPrediction: [],
   worldCounter: 0,
+  worldKing: new Character(40, "Night King", "night_king.png"),
   predictionInfo: {
     user: {name: "", picture: "http://via.placeholder.com/150x150/fff?text=%20"}
   }
@@ -108,6 +110,7 @@ const getters = {
   worldPrediction: state => state.worldPrediction,
   predictionInfo: state => state.predictionInfo,
   worldCounter: state => state.worldCounter,
+  worldKing: state => state.worldKing,
 };
 
 const actions = {
@@ -143,9 +146,13 @@ const actions = {
           this.state.prediction = [];
 
           if(userId == "world") {
+            var king = data.characters.sort((a,b) => a.kingCounter >= b.kingCounter ? -1 : 1)[0];
+
             data.characters.sort((a,b) => a.deadCounter >= b.deadCounter ? -1 : 1);
+
             commit("setWorldCounter", data.counter)
             commit("setWorldPrediction", data.characters);
+            commit("setWorldKing", new Character(king.id, king.name, king.picture, king.isDead, true, king.kingCounter));
           } else {
             predictionInfo = {
               date: data.date.toDate(),
@@ -223,6 +230,7 @@ const mutations = {
   setWorldPrediction: (state, characters) => (state.worldPrediction = characters),
   setPredictionInfo: (state, info) => (state.predictionInfo = info),
   setKing: (state, character) => (state.king = character),
+  setWorldKing: (state, character) => (state.worldKing = character),
   setCharacters: (state, characters) => (state.characters = characters),
   setWorldCounter: (state, counter) => (state.worldCounter = counter)
 };
