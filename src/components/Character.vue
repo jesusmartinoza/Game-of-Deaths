@@ -18,7 +18,7 @@
       <span>😵 {{character.deadCounter}} votes</span>
     </div>
 
-    <div class="dead-counter" v-if="character.kingCounter != null && character.isKing">
+    <div class="dead-counter" v-if="character.kingCounter != null && character.kingCounter > 0 && character.isKing">
       <span>👑 {{character.kingCounter}} votes</span>
     </div>
   </div>

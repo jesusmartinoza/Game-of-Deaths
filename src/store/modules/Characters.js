@@ -6,7 +6,7 @@ import router from '@/router'
  * Class to represent a Game Of Thrones Character
  */
 class Character {
-  constructor(id, name, picture, isDead = false, isKing = false, kingCounter) {
+  constructor(id, name, picture, isDead = false, isKing = false, kingCounter = 0) {
     this.id = id;
     this.name = name;
     this.picture = picture;
@@ -49,7 +49,7 @@ var db = firebase.firestore();
 
 // Hard coded characters to save up firebase read transactions
 const state = {
-  king : new Character(1, "Jon Snow", "jon_snow.png"),
+  king : new Character(99, "???", "unknown.png"),
   characters : [
     new Character(1, "Jon Snow", "jon_snow.png"),
     new Character(2, "Daenerys Targaryen", "daenerys.png"),
@@ -94,7 +94,7 @@ const state = {
   prediction: [],
   worldPrediction: [],
   worldCounter: 0,
-  worldKing: new Character(40, "Night King", "night_king.png"),
+  worldKing: new Character(99, "???", "unknown.png"),
   predictionInfo: {
     user: {name: "", picture: "http://via.placeholder.com/150x150/fff?text=%20"}
   }
@@ -195,6 +195,18 @@ const actions = {
     var predictionRef = db.collection('predictions').doc(userId);
     var profilePicture = rootState.user.userData.photoURL != undefined ? rootState.user.userData.photoURL : "";
 
+
+
+    console.log({
+      characters: prediction,
+      date: new Date(),
+      king: Object.assign({}, this.state.characters.king),
+      user: {
+        name: rootState.user.userData.displayName.split(' ')[0],
+        picture: profilePicture
+      }
+    })
+
     if(rootState.user.userData.providerData[0].providerId == "facebook.com")
       profilePicture = `https://graph.facebook.com/${rootState.user.userData.providerData[0].uid}/picture?height=300`;
 
@@ -211,7 +223,6 @@ const actions = {
     // Update the user info
     var userRef = db.collection("users").doc(userId);
     batch.set(userRef, {hasPrediction: true}, {merge: true});
-
     // Commit the batch
     batch.commit().then(function () {
       router.push('/prediction?id=' + userId);

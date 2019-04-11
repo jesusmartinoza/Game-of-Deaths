@@ -41,11 +41,10 @@ import SocialLogin from '../components/SocialLogin.vue'
 import FancyButton from '../components/FancyButton.vue'
 import Character from '../components/Character.vue'
 import firebase from 'firebase'
+import Loading from 'vue-loading-overlay'
+import router from '@/router'
 import 'firebase/firestore'
-// Import component
-import Loading from 'vue-loading-overlay';
-// Import stylesheet
-import 'vue-loading-overlay/dist/vue-loading.css';
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 var db = firebase.firestore();
 

@@ -7,6 +7,7 @@
     <h3>Guess and bet with your friends about the final season of Game Of Thrones</h3>
     <div class="characters margin-bottom">
         <Character v-for="character in all" :key="character.id"
+          v-if="character.id != 99"
           :character="character" />
     </div>
 
