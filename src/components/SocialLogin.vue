@@ -1,7 +1,9 @@
 <template>
   <div id="social-btns">
     <button class="movebtn" :class="[ provider == 'Google' ? 'google' : provider == 'Facebook' ? 'facebook' : '' ]">
-      {{provider}} <font-awesome-icon :icon="[`${package}`, `${icon}`]"/>
+      <font-awesome-icon :icon="[`${package}`, `${icon}`]"/>
+      <span v-if="provider == 'Facebook'">Continue with Facebook</span>
+      <span v-else>{{provider}}</span>
     </button>
   </div>
 </template>
@@ -37,6 +39,9 @@ button:hover {
   border-color: #646171;
   box-shadow: 0px 0 5px 0 #646171;
 }
+button span {
+  margin-left: 8px;
+}
 
 /* --- Animated Buttons --- */
 .movebtn{
@@ -45,7 +50,7 @@ button:hover {
   max-width: 140px;
   width:100%;
   background-image: none;
-  padding: 8px 10px;
+  padding: 8px;
   border-radius: 0;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
@@ -60,9 +65,10 @@ button:hover {
   background-color: #e04c40;
 }
 .facebook {
-  border: 2px solid #2e4da7;
+  border: 2px solid #3F65B3;
   color: #ffffff;
-  background-color: #2e4da7;
+  background-color: #3F65B3;
+  max-width: 240px;
 }
 .google:focus,
 .google:hover,

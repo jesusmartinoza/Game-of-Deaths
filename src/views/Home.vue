@@ -12,7 +12,7 @@
     <div class="social-btns" v-if="!isAuthenticated">
         <p>Already have a prediction? <br> Login </p>
         <SocialLogin provider="Google" package="fab" icon="google" @click.native="loginWithGoogle" />
-        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" @click.native="loginWithFacebook" />
+        <SocialLogin provider="Facebook" package="fab" icon="facebook" @click.native="loginWithFacebook" />
     </div>
     <div v-else>
       <SocialLogin provider="Logout" icon="sign-out-alt" package="fas" @click.native="logout" />

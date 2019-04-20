@@ -14,7 +14,7 @@
     <div class="social-btns" v-if="!isAuthenticated">
         <h3 class="glow-text">Please login to sign your prediction</h3>
         <SocialLogin provider="Google" package="fab" icon="google" @click.native="signWithGoogle" />
-        <SocialLogin provider="Facebook" package="fab" icon="facebook-f" />
+        <SocialLogin provider="Facebook" package="fab" icon="facebook" />
     </div>
 
     <div class="margin-top prediction-box" v-else>
