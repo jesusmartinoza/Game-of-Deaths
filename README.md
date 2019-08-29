@@ -1,8 +1,11 @@
 # Game Of Deaths
-VueJS App to guess who is gonna die in last season of Game Of Thrones.
-https://gameofdeaths.com
+![](https://github.com/jesusmartinoza/Game-of-Deaths/blob/master/static/who_will_die_in_game_of_thrones.png?raw=true)
 
-Project just for fun! :P 
+VueJS App to guess who is gonna die in last season of Game Of Thrones. Project just for fun and learn a little of Vue!
+
+:link: https://gameofdeaths.com
+
+
 
 
 ## Project setup
